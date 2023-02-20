@@ -140,19 +140,19 @@ Upon initialization, FigureCanvasBase is either assigned a Figure object or if o
 # figure.py line 2498
 @_api.make_keyword_only("3.6", "facecolor")
 def __init__(self,
-			figsize=None,
-			dpi=None,
-			facecolor=None,
-			edgecolor=None,
-			linewidth=0.0,
-			frameon=None,
-			subplotpars=None,  # rc figure.subplot.*
-			tight_layout=None,  # rc figure.autolayout
-			constrained_layout=None,  # rc figure.constrained_layout.use
-			*,
-			layout=None,
-			**kwargs
-			):
+		figsize=None,
+		dpi=None,
+		facecolor=None,
+		edgecolor=None,
+		linewidth=0.0,
+		frameon=None,
+		subplotpars=None,  # rc figure.subplot.*
+		tight_layout=None,  # rc figure.autolayout
+		constrained_layout=None,  # rc figure.constrained_layout.use
+		*,
+		layout=None,
+		**kwargs
+		):
 	""" ... """
 	# ...
 	self._canvas_callbacks = cbook.CallbackRegistry(
@@ -181,7 +181,7 @@ The CallbackRegistry has three important functions:
 ```python
 # cbook.py line 205
 def connect(self, signal, func):
-    """Register *func* to be called when signal *signal* is generated."""
+    	"""Register *func* to be called when signal *signal* is generated."""
 	# ...
 ```
 
@@ -259,4 +259,4 @@ Now observe the CallbackRegistry class. It maintains mappings that map a particu
 ### UML Diagram:
 ![screensh](./diagrams/Observer%20Design%20Pattern.png)
 
-This UML diagram further illustrates the Observer pattern. Matplotlib does a variation of the Observer pattern because it is designed to store the callback functions instead of the objects that inherit the Subscriber interface. CallbackRegistry is the publisher that has functions to add and remove callback functions with connect() and disconnect() and to notify is to call process(), iterating through the map of callbacks that match the signal.
+This UML diagram further illustrates the Observer pattern. Matplotlib does a variation of the Observer pattern because it is designed to store the callback functions instead of the objects that inherit the Subscriber interface. CallbackRegistry is the publisher that has functions to add and remove callback functions with `connect()` and `disconnect()` and to notify is to call `process()`, iterating through the map of callbacks that match the signal.
