@@ -188,6 +188,9 @@ class FigureBase(Artist):
         # axis._get_tick_boxes_siblings
         self._align_label_groups = {"x": cbook.Grouper(), "y": cbook.Grouper()}
 
+        # groupers to keep track of titles we want to align.
+        self._align_title_group = {"title": cbook.Grouper()}
+
         self.figure = self
         self._localaxes = []  # track all axes
         self.artists = []
@@ -1475,6 +1478,38 @@ default: %(va)s
         """
         self.align_xlabels(axs=axs)
         self.align_ylabels(axs=axs)
+
+    def align_titles(self, axs=None):
+        """
+        Align the titles of subplots with the same subplots row
+        if title alignment is being done automatically.
+
+        Alignment persists for draw events after this is called.
+
+        Parameters
+        ----------
+        axs : list of `~matplotlib.axes.Axes`
+            Optional list (or `~numpy.ndarray`) of `~matplotlib.axes.Axes`
+            to align the titles.
+            Default is to align all Axes on the figure.
+
+        Notes
+        -----
+        This assumes that ``axs`` are from the same `.GridSpec`, so that
+        their `.SubplotSpec` positions correspond to figure positions.
+
+        """
+        if axs is None:
+            axs = self.axes
+        axs = [ax for ax in np.ravel(axs) if ax.get_subplotspec() is not None]
+        for ax in axs:
+            rowspan = ax.get_subplotspec().rowspan
+            pos = ax.title.get_position()
+            for axc in axs:
+                rowspanc = axc.get_subplotspec().rowspan
+                if rowspan.start == rowspanc.start:
+                    # grouper for groups of xlabels to align
+                    self._align_title_group["title"].join(ax, axc)
 
     def add_gridspec(self, nrows=1, ncols=1, **kwargs):
         """

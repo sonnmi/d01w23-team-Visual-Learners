@@ -2993,6 +2993,33 @@ class _AxesBase(martist.Artist):
             x, _ = title.get_position()
             title.set_position((x, ymax))
 
+        for title in titles:
+            adjustment = 0
+            bbox1, bbox2 = self.xaxis._get_tick_boxes_siblings(renderer=renderer)
+            try:
+                spine = self.axes.spines['top']
+                spinebbox = spine.get_window_extent()
+            except KeyError:
+                # use Axes if spine doesn't exist
+                spinebbox = self.axes.bbox
+            bbox_align_axis = mtransforms.Bbox.union(bbox2 + [spinebbox])
+            ticks_to_draw = self.xaxis._update_ticks()
+            tlb, tlb2 =  self.xaxis._get_ticklabel_bboxes(ticks_to_draw, renderer)
+            bbox_current_xaxis = mtransforms.Bbox.union(tlb2 + [spinebbox])
+            if bbox_align_axis.y1 > bbox_current_xaxis.y1:
+                y_diff_align_xaxis = bbox_align_axis.y1 - bbox_align_axis.y0
+                y_diff_cur_xaxis = self.bbox.ymax - self.bbox.ymin
+                adjustment += y_diff_align_xaxis / y_diff_cur_xaxis
+            axs = self.figure._align_title_group["title"].get_siblings(self)
+            for axc in axs:
+                ymaxc = axc.bbox.ymax
+                yminc = axc.bbox.ymin
+                if ymaxc > self.bbox.ymax:
+                    y_diffc = ymaxc - yminc
+                    y_diff = self.bbox.ymax - self.bbox.ymin
+                    adjustment += (y_diffc - y_diff) / (2 * y_diff)
+            title.set_position((title.get_position()[0], title.get_position()[1] + adjustment))
+
     # Drawing
     @martist.allow_rasterization
     def draw(self, renderer):
