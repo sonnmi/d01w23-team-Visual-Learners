@@ -814,3 +814,26 @@ class HandlerPolyCollection(HandlerBase):
         self.update_prop(p, orig_handle, legend)
         p.set_transform(trans)
         return [p]
+
+class HandlerPatchCollection(HandlerPatch):
+    """
+    Handler for `.PatchCollection` instances.
+    """
+    def _default_update_prop(self, legend_handle, orig_handle):
+        facecolor = orig_handle.get_facecolor()[0]
+        edgecolor = orig_handle.get_edgecolor()[0]
+        linewidth = orig_handle.get_linewidths()[0]
+        hatch = orig_handle.get_hatch()[0]
+        legend_handle.set_facecolor(facecolor)
+        legend_handle.set_edgecolor(edgecolor)
+        legend_handle.set_linewidth(linewidth)
+        legend_handle.set_hatch(hatch)
+    
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize, trans):
+        # docstring inherited
+        p = self._create_patch(legend, orig_handle,
+                               xdescent, ydescent, width, height, fontsize)
+        self.update_prop(p, orig_handle, legend)
+        p.set_transform(trans)
+        return [p]
