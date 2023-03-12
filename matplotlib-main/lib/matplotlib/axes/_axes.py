@@ -4140,7 +4140,7 @@ class Axes(_AxesBase):
         if zorder is None:
             zorder = mlines.Line2D.zorder
 
-        zdelta = - 0.1
+        zdelta = 0.1
 
         def merge_kw_rc(subkey, explicit, zdelta=0, usemarker=True):
             d = {k.split('.')[-1]: v for k, v in mpl.rcParams.items()

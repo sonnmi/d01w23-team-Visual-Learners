@@ -3045,6 +3045,12 @@ def test_bxp_custommedian():
     _bxp_test_helper(bxp_kwargs=dict(
         medianprops=dict(linestyle='--', color='b', lw=3)))
 
+@check_figures_equal(extensions=["png"])
+def test_boxplot_median_bound_by_box(fig_test, fig_ref):
+    data = np.arange(3)
+    medianprops_test = {"linewidth": 12}
+    medianprops_ref = {**medianprops_test, "solid_capstyle": "butt"}
+    fig_test.subplots().boxplot(data,  medianprops=medianprops_t
 
 @image_comparison(['bxp_customcap.png'],
                   remove_text=True,
