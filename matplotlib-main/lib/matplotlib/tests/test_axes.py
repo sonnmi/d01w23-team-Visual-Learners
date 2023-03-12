@@ -8488,4 +8488,3 @@ def test_align_titles():
     y_title5 = axs[1][1].title.get_position()[1] * axs[1][1].bbox.y1
     assert y_title1 == y_title2 == y_title3
     assert y_title4 == y_title5
-    

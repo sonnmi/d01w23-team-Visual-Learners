@@ -3004,7 +3004,7 @@ class _AxesBase(martist.Artist):
                 spinebbox = self.axes.bbox
             bbox_align_axis = mtransforms.Bbox.union(bbox2 + [spinebbox])
             ticks_to_draw = self.xaxis._update_ticks()
-            tlb, tlb2 =  self.xaxis._get_ticklabel_bboxes(ticks_to_draw, renderer)
+            tlb, tlb2 = self.xaxis._get_ticklabel_bboxes(ticks_to_draw, renderer)
             bbox_current_xaxis = mtransforms.Bbox.union(tlb2 + [spinebbox])
             if bbox_align_axis.y1 > bbox_current_xaxis.y1:
                 y_diff_align_xaxis = bbox_align_axis.y1 - bbox_align_axis.y0
@@ -3018,7 +3018,8 @@ class _AxesBase(martist.Artist):
                     y_diffc = ymaxc - yminc
                     y_diff = self.bbox.ymax - self.bbox.ymin
                     adjustment += (y_diffc - y_diff) / (2 * y_diff)
-            title.set_position((title.get_position()[0], title.get_position()[1] + adjustment))
+            title.set_position((title.get_position()[0],
+                                title.get_position()[1] + adjustment))
 
     # Drawing
     @martist.allow_rasterization
