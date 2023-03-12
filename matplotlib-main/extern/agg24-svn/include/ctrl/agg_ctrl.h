@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -33,7 +33,7 @@ namespace agg
         //--------------------------------------------------------------------
         virtual ~ctrl() {}
         ctrl(double x1, double y1, double x2, double y2, bool flip_y) :
-            m_x1(x1), m_y1(y1), m_x2(x2), m_y2(y2), 
+            m_x1(x1), m_y1(y1), m_x2(x2), m_y2(y2),
             m_flip_y(flip_y),
             m_mtx(0)
         {
@@ -84,7 +84,7 @@ namespace agg
 
 
     //--------------------------------------------------------------------
-    template<class Rasterizer, class Scanline, class Renderer, class Ctrl> 
+    template<class Rasterizer, class Scanline, class Renderer, class Ctrl>
     void render_ctrl(Rasterizer& ras, Scanline& sl, Renderer& r, Ctrl& c)
     {
         unsigned i;
@@ -98,7 +98,7 @@ namespace agg
 
 
     //--------------------------------------------------------------------
-    template<class Rasterizer, class Scanline, class Renderer, class Ctrl> 
+    template<class Rasterizer, class Scanline, class Renderer, class Ctrl>
     void render_ctrl_rs(Rasterizer& ras, Scanline& sl, Renderer& r, Ctrl& c)
     {
         unsigned i;

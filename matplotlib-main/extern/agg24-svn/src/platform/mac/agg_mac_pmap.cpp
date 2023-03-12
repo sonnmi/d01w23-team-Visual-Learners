@@ -51,8 +51,8 @@ namespace agg
 
 
     //------------------------------------------------------------------------
-    void pixel_map::create(unsigned width, 
-                           unsigned height, 
+    void pixel_map::create(unsigned width,
+                           unsigned height,
                            org_e    org,
                            unsigned clear_val)
     {
@@ -60,7 +60,7 @@ namespace agg
         if(width == 0)  width = 1;
         if(height == 0) height = 1;
         m_bpp = org;
-        
+
         Rect	r;
     	int		row_bytes = calc_row_len (width, m_bpp);
     	MacSetRect(&r, 0, 0, width, height);
@@ -99,12 +99,12 @@ namespace agg
         {
             case  1: k = n;
                      n = n >> 3;
-                     if(k & 7) n++; 
+                     if(k & 7) n++;
                      break;
 
             case  4: k = n;
                      n = n >> 1;
-                     if(k & 3) n++; 
+                     if(k & 3) n++;
                      break;
 
             case  8:
@@ -113,7 +113,7 @@ namespace agg
             case 16: n = n << 1;
                      break;
 
-            case 24: n = (n << 1) + n; 
+            case 24: n = (n << 1) + n;
                      break;
 
             case 32: n = n << 2;
@@ -142,10 +142,10 @@ namespace agg
 		// but does not support all pixel depths.
 		MacSetRect (&dest_rect, 0, 0, this->width(), this->height());
 		ImageDescriptionHandle		image_description;
-		MakeImageDescriptionForPixMap (pm, &image_description);	   
+		MakeImageDescriptionForPixMap (pm, &image_description);
 		if (image_description != nil)
 		{
-			DecompressImage (GetPixBaseAddr (pm), image_description, GetPortPixMap (port), nil, &dest_rect, ditherCopy, nil);	   
+			DecompressImage (GetPixBaseAddr (pm), image_description, GetPortPixMap (port), nil, &dest_rect, ditherCopy, nil);
 			DisposeHandle ((Handle) image_description);
 		}
 	}
@@ -169,7 +169,7 @@ namespace agg
     {
 		draw (window, device_rect, bmp_rect);	// currently just mapped to drawing method
     }
-    
+
 
     //------------------------------------------------------------------------
     void pixel_map::blend(WindowRef window, int x, int y, double scale) const
@@ -186,7 +186,7 @@ namespace agg
     {
 		FSSpec						fss;
 		OSErr						err;
-		
+
 		// get file specification to application directory
 		err = HGetVol(nil, &fss.vRefNum, &fss.parID);
 		if (err == noErr)
@@ -227,7 +227,7 @@ namespace agg
     {
 		FSSpec						fss;
  		OSErr						err;
-		
+
 		// get file specification to application directory
 		err = HGetVol(nil, &fss.vRefNum, &fss.parID);
 		if (err == noErr)
@@ -252,7 +252,7 @@ namespace agg
     			CloseComponent(ge);
     		}
     	}
-    	
+
         return err == noErr;
     }
 
@@ -293,6 +293,3 @@ namespace agg
 
 
 }
-
-
-

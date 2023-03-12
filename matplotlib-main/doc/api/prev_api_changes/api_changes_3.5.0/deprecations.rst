@@ -337,7 +337,7 @@ Matplotlib 1.3.1, and is now deprecated.
 The following helpers in `matplotlib.sphinxext.plot_directive` are deprecated:
 
 - ``unescape_doctest`` (use `doctest.script_from_examples` instead),
-- ``split_code_at_show``, 
+- ``split_code_at_show``,
 - ``run_code``.
 
 Testing support

@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -23,7 +23,7 @@ namespace agg
 {
 
     //------------------------------------------------------------------------
-    gamma_spline::gamma_spline() : 
+    gamma_spline::gamma_spline() :
         m_x1(0), m_y1(0), m_x2(10), m_y2(10), m_cur_x(0.0)
     {
         values(1.0, 1.0, 1.0, 1.0);
@@ -31,8 +31,8 @@ namespace agg
 
 
     //------------------------------------------------------------------------
-    double gamma_spline::y(double x) const 
-    { 
+    double gamma_spline::y(double x) const
+    {
         if(x < 0.0) x = 0.0;
         if(x > 1.0) x = 1.0;
         double val = m_spline.get(x);
@@ -104,7 +104,7 @@ namespace agg
     //------------------------------------------------------------------------
     unsigned gamma_spline::vertex(double* vx, double* vy)
     {
-        if(m_cur_x == 0.0) 
+        if(m_cur_x == 0.0)
         {
             *vx = m_x1;
             *vy = m_y1;
@@ -112,19 +112,18 @@ namespace agg
             return path_cmd_move_to;
         }
 
-        if(m_cur_x > 1.0) 
+        if(m_cur_x > 1.0)
         {
             return path_cmd_stop;
         }
-        
+
         *vx = m_x1 + m_cur_x * (m_x2 - m_x1);
         *vy = m_y1 + y(m_cur_x) * (m_y2 - m_y1);
 
         m_cur_x += 1.0 / (m_x2 - m_x1);
         return path_cmd_line_to;
     }
-  
+
 
 
 }
-

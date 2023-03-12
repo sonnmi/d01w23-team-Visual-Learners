@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -201,7 +201,7 @@ namespace agg
 		}
 
 		return false;
-	}		
+	}
 
 	//------------------------------------------------------------------------
 	bool platform_specific::load_img(const char* file, unsigned idx,
@@ -469,7 +469,7 @@ namespace agg
 		reqmsg.or_Attrs = 0;
 		reqmsg.or_Window = m_specific->m_window;
 		reqmsg.or_Screen = 0;
-		
+
 		IIntuition->IDoMethodA(reinterpret_cast<Object*>(req),
 			reinterpret_cast<Msg>(&reqmsg));
 		IIntuition->DisposeObject(req);

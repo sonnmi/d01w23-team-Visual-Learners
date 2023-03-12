@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -109,7 +109,7 @@ namespace agg
             m_colors[3] = &m_inactive_color;
             m_colors[4] = &m_active_color;
         }
-          
+
 
         void background_color(const ColorT& c) { m_background_color = c; }
         void border_color(const ColorT& c) { m_border_color = c; }
@@ -117,12 +117,12 @@ namespace agg
         void inactive_color(const ColorT& c) { m_inactive_color = c; }
         void active_color(const ColorT& c) { m_active_color = c; }
 
-        const ColorT& color(unsigned i) const { return *m_colors[i]; } 
+        const ColorT& color(unsigned i) const { return *m_colors[i]; }
 
     private:
         rbox_ctrl(const rbox_ctrl<ColorT>&);
         const rbox_ctrl<ColorT>& operator = (const rbox_ctrl<ColorT>&);
-       
+
         ColorT m_background_color;
         ColorT m_border_color;
         ColorT m_text_color;
@@ -138,4 +138,3 @@ namespace agg
 
 
 #endif
-

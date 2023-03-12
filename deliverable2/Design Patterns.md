@@ -51,7 +51,7 @@ def _draw_list_compositing_images(
 ### UML Diagram:
 ![screensh](./diagrams/Composite%20Design%20Pattern.png)
 
-FigureBase class here acts as the Composite class, which extends the Component class, Artist, and owns a list of Artists. The Leaf classes are the other components extending Artist, for example in the UML diagram, Axes is a Leaf class. Because a FigureBase instance can have 0..* Artist components, FigureBase and those components form a tree structure. As they all have method draw(renderer), the composition, FigureBase, and individual components, like Axes, can be treated uniformly. For users who want to draw a Figure with Matplotlib, the users can use the same draw(renderer) methods like drawing individual components, and the design pattern would traverse the tree structure inside the composite Figure to draw each component for you. Therefore, for a client, how to draw a composite Figure and how to draw individual Axes have no difference. 
+FigureBase class here acts as the Composite class, which extends the Component class, Artist, and owns a list of Artists. The Leaf classes are the other components extending Artist, for example in the UML diagram, Axes is a Leaf class. Because a FigureBase instance can have 0..* Artist components, FigureBase and those components form a tree structure. As they all have method draw(renderer), the composition, FigureBase, and individual components, like Axes, can be treated uniformly. For users who want to draw a Figure with Matplotlib, the users can use the same draw(renderer) methods like drawing individual components, and the design pattern would traverse the tree structure inside the composite Figure to draw each component for you. Therefore, for a client, how to draw a composite Figure and how to draw individual Axes have no difference.
 
 
 <br>
@@ -191,7 +191,7 @@ def connect(self, signal, func):
 def process(self, s, *args, **kwargs):
 	"""
 	Process signal *s*.
-	  
+
 	All of the functions registered to receive callbacks on *s* will be
 	called with ``*args`` and ``**kwargs``.
 	"""
@@ -204,7 +204,7 @@ def process(self, s, *args, **kwargs):
 def disconnect(self, cid):
 	"""
 	Disconnect the callback registered with callback id *cid*.
-	  
+
 	No error is raised if such a callback does not exist.
 	"""
 	# ...
@@ -216,7 +216,7 @@ These functions are then called in FigureCanvasBase under mpl_connect and mpl_di
 def mpl_connect(self, s, func):
 	"""
 	Bind function *func* to event *s*.
-	  
+
 	...
 	"""
 	return self.callbacks.connect(s, func)
@@ -226,7 +226,7 @@ def mpl_connect(self, s, func):
 def mpl_disconnect(self, cid):
 	"""
 	Disconnect the callback with id *cid*.
-	  
+
 	...
 	"""
 	return self.callbacks.disconnect(cid)
@@ -238,12 +238,12 @@ Here’s an [example](https://matplotlib.org/stable/users/explain/event_handling
 ```python
 fig, ax = plt.subplots()
 ax.plot(np.random.rand(10))
-  
+
 def onclick(event):
     print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
           ('double' if event.dblclick else 'single', event.button,
            event.x, event.y, event.xdata, event.ydata))
-  
+
 cid = fig.canvas.mpl_connect('button_press_event', onclick)
 ```
 <br>

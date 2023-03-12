@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -25,8 +25,8 @@ namespace agg
 {
 
     //------------------------------------------------------------------------
-    cbox_ctrl_impl::cbox_ctrl_impl(double x, double y, 
-                                   const char* l, 
+    cbox_ctrl_impl::cbox_ctrl_impl(double x, double y,
+                                   const char* l,
                                    bool flip_y) :
         ctrl(x, y, x + 9.0 * 1.5, y + 9.0 * 1.5, flip_y),
         m_text_thickness(1.5),
@@ -42,8 +42,8 @@ namespace agg
     //------------------------------------------------------------------------
     void cbox_ctrl_impl::text_size(double h, double w)
     {
-        m_text_width = w; 
-        m_text_height = h; 
+        m_text_width = w;
+        m_text_height = h;
     }
 
     //------------------------------------------------------------------------
@@ -108,22 +108,22 @@ namespace agg
         default:
         case 0:                 // Border
             m_vertex = 0;
-            m_vx[0] = m_x1; 
+            m_vx[0] = m_x1;
             m_vy[0] = m_y1;
             m_vx[1] = m_x2;
             m_vy[1] = m_y1;
             m_vx[2] = m_x2;
             m_vy[2] = m_y2;
-            m_vx[3] = m_x1; 
+            m_vx[3] = m_x1;
             m_vy[3] = m_y2;
-            m_vx[4] = m_x1 + m_text_thickness; 
-            m_vy[4] = m_y1 + m_text_thickness; 
-            m_vx[5] = m_x1 + m_text_thickness; 
+            m_vx[4] = m_x1 + m_text_thickness;
+            m_vy[4] = m_y1 + m_text_thickness;
+            m_vx[5] = m_x1 + m_text_thickness;
             m_vy[5] = m_y2 - m_text_thickness;
             m_vx[6] = m_x2 - m_text_thickness;
             m_vy[6] = m_y2 - m_text_thickness;
             m_vx[7] = m_x2 - m_text_thickness;
-            m_vy[7] = m_y1 + m_text_thickness; 
+            m_vy[7] = m_y1 + m_text_thickness;
             break;
 
         case 1:                 // Text
@@ -209,6 +209,3 @@ namespace agg
         return cmd;
     }
 }
-
-
-

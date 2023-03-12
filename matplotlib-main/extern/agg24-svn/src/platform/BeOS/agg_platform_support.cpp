@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -153,7 +153,7 @@ AGGView::AGGView(BRect frame,
       fMouseButtons(0),
       fMouseX(-1),
       fMouseY(-1),
-      
+
       fLastKeyDown(0),
 
       fRedraw(true),
@@ -163,7 +163,7 @@ AGGView::AGGView(BRect frame,
       fEnableTicks(true)
 {
     SetViewColor(B_TRANSPARENT_32_BIT);
-    
+
     frame.OffsetTo(0.0, 0.0);
     fBitmap = new BBitmap(frame, 0, pix_format_to_color_space(fFormat));
     if (fBitmap->IsValid()) {
@@ -316,7 +316,7 @@ AGGView::FrameResized(float width, float height)
 
         // pass the event on to AGG
         fAGG->on_resize((int)width + 1, (int)height + 1);
-        
+
         fRedraw = true;
         Invalidate();
     } else
@@ -354,7 +354,7 @@ AGGView::KeyDown(const char* bytes, int32 numBytes)
                 break;
         }
 
-/*            case key_f2:                        
+/*            case key_f2:
 fAGG->copy_window_to_img(agg::platform_support::max_images - 1);
 fAGG->save_img(agg::platform_support::max_images - 1, "screenshot");
 break;
@@ -852,11 +852,11 @@ class platform_specific {
 
                 rendering_buffer rbuf_tmp;
                 attach_buffer_to_BBitmap(rbuf_tmp, transBitmap, m_flip_y);
-        
+
                 m_specific->fImages[idx] = bitmap;
-        
+
                 attach_buffer_to_BBitmap(m_rbuf_img[idx], bitmap, m_flip_y);
-        
+
                 rendering_buffer* dst = &m_rbuf_img[idx];
 
                 switch(m_format)
@@ -865,41 +865,41 @@ class platform_specific {
                     return false;
 //                  color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_gray8()); break;
                     break;
-        
+
                 case pix_format_rgb555:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_rgb555()); break;
                     break;
-        
+
                 case pix_format_rgb565:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_rgb565()); break;
                     break;
-        
+
                 case pix_format_rgb24:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_rgb24()); break;
                     break;
-        
+
                 case pix_format_bgr24:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_bgr24()); break;
                     break;
-        
+
                 case pix_format_abgr32:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_abgr32()); break;
                     break;
-        
+
                 case pix_format_argb32:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_argb32()); break;
                     break;
-        
+
                 case pix_format_bgra32:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_bgra32()); break;
                     break;
-        
+
                 case pix_format_rgba32:
                     color_conv(dst, &rbuf_tmp, color_conv_bgra32_to_rgba32()); break;
                     break;
                 }
                 delete transBitmap;
-                
+
                 return true;
 
             } else {
@@ -984,7 +984,3 @@ main(int argc, char* argv[])
 {
     return agg_main(argc, argv);
 }
-
-
-
-

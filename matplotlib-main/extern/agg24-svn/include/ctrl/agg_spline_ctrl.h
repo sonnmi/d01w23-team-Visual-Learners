@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -33,13 +33,13 @@ namespace agg
 {
 
     //------------------------------------------------------------------------
-    // Class that can be used to create an interactive control to set up 
+    // Class that can be used to create an interactive control to set up
     // gamma arrays.
     //------------------------------------------------------------------------
     class spline_ctrl_impl : public ctrl
     {
     public:
-        spline_ctrl_impl(double x1, double y1, double x2, double y2, 
+        spline_ctrl_impl(double x1, double y1, double x2, double y2,
                          unsigned num_pnt, bool flip_y=false);
 
         // Set other parameters
@@ -114,7 +114,7 @@ namespace agg
     template<class ColorT> class spline_ctrl : public spline_ctrl_impl
     {
     public:
-        spline_ctrl(double x1, double y1, double x2, double y2, 
+        spline_ctrl(double x1, double y1, double x2, double y2,
                     unsigned num_pnt, bool flip_y=false) :
             spline_ctrl_impl(x1, y1, x2, y2, num_pnt, flip_y),
             m_background_color(rgba(1.0, 1.0, 0.9)),
@@ -136,7 +136,7 @@ namespace agg
         void curve_color(const ColorT& c)        { m_curve_color = c; }
         void inactive_pnt_color(const ColorT& c) { m_inactive_pnt_color = c; }
         void active_pnt_color(const ColorT& c)   { m_active_pnt_color = c; }
-        const ColorT& color(unsigned i) const { return *m_colors[i]; } 
+        const ColorT& color(unsigned i) const { return *m_colors[i]; }
 
     private:
         spline_ctrl(const spline_ctrl<ColorT>&);

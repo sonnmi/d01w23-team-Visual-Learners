@@ -1,10 +1,10 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.4 
+// Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (McSeem)
 // Copyright (C) 2002 Hansruedi Baer (MacOS support)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -44,8 +44,8 @@ namespace agg
 
     public:
         void        destroy();
-        void        create(unsigned width, 
-                           unsigned height, 
+        void        create(unsigned width,
+                           unsigned height,
                            org_e    org,
                            unsigned clear_val=255);
 
@@ -53,12 +53,12 @@ namespace agg
         bool        load_from_qt(const char* filename);
         bool        save_as_qt(const char* filename) const;
 
-        void        draw(WindowRef window, 
-                         const Rect* device_rect=0, 
+        void        draw(WindowRef window,
+                         const Rect* device_rect=0,
                          const Rect* bmp_rect=0) const;
         void        draw(WindowRef window, int x, int y, double scale=1.0) const;
-        void        blend(WindowRef window, 
-                          const Rect* device_rect=0, 
+        void        blend(WindowRef window,
+                          const Rect* device_rect=0,
                           const Rect* bmp_rect=0) const;
         void        blend(WindowRef window, int x, int y, double scale=1.0) const;
 

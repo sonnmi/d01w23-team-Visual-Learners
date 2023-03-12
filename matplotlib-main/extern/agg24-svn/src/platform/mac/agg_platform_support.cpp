@@ -1,10 +1,10 @@
 //----------------------------------------------------------------------------
-// Anti-Grain Geometry - Version 2.4 
+// Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (McSeem)
 // Copyright (C) 2003 Hansruedi Baer (MacOS support)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -39,7 +39,7 @@
 
 namespace agg
 {
-    
+
 pascal OSStatus DoWindowClose (EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 pascal OSStatus DoWindowDrawContent (EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 pascal OSStatus DoAppQuit (EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
@@ -57,14 +57,14 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
     public:
         platform_specific(pix_format_e format, bool flip_y);
 
-        void create_pmap(unsigned width, unsigned height, 
+        void create_pmap(unsigned width, unsigned height,
                          rendering_buffer* wnd);
 
         void display_pmap(WindowRef window, const rendering_buffer* src);
-        bool load_pmap(const char* fn, unsigned idx, 
+        bool load_pmap(const char* fn, unsigned idx,
                        rendering_buffer* dst);
 
-        bool save_pmap(const char* fn, unsigned idx, 
+        bool save_pmap(const char* fn, unsigned idx,
                        const rendering_buffer* src);
 
         unsigned translate(unsigned keycode);
@@ -192,12 +192,12 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 
 
     //------------------------------------------------------------------------
-    void platform_specific::create_pmap(unsigned width, 
+    void platform_specific::create_pmap(unsigned width,
                                         unsigned height,
                                         rendering_buffer* wnd)
     {
         m_pmap_window.create(width, height, org_e(m_bpp));
-        wnd->attach(m_pmap_window.buf(), 
+        wnd->attach(m_pmap_window.buf(),
                     m_pmap_window.width(),
                     m_pmap_window.height(),
                       m_flip_y ?
@@ -216,7 +216,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
         else
         {
             pixel_map pmap_tmp;
-            pmap_tmp.create(m_pmap_window.width(), 
+            pmap_tmp.create(m_pmap_window.width(),
                             m_pmap_window.height(),
                             org_e(m_sys_bpp));
 
@@ -259,7 +259,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 
 
     //------------------------------------------------------------------------
-    bool platform_specific::save_pmap(const char* fn, unsigned idx, 
+    bool platform_specific::save_pmap(const char* fn, unsigned idx,
                                       const rendering_buffer* src)
     {
         if(m_sys_format == m_format)
@@ -269,7 +269,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
         else
         {
             pixel_map pmap_tmp;
-            pmap_tmp.create(m_pmap_img[idx].width(), 
+            pmap_tmp.create(m_pmap_img[idx].width(),
                             m_pmap_img[idx].height(),
                             org_e(m_sys_bpp));
 
@@ -313,7 +313,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 
 
     //------------------------------------------------------------------------
-    bool platform_specific::load_pmap(const char* fn, unsigned idx, 
+    bool platform_specific::load_pmap(const char* fn, unsigned idx,
                                       rendering_buffer* dst)
     {
         pixel_map pmap_tmp;
@@ -327,8 +327,8 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
                          -pmap_tmp.row_bytes() :
                           pmap_tmp.row_bytes());
 
-        m_pmap_img[idx].create(pmap_tmp.width(), 
-                               pmap_tmp.height(), 
+        m_pmap_img[idx].create(pmap_tmp.width(),
+                               pmap_tmp.height(),
                                org_e(m_bpp),
                                0);
 
@@ -417,7 +417,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
             }
             break;
         }
-        
+
         return true;
     }
 
@@ -475,7 +475,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
     static unsigned get_key_flags(UInt32 wflags)
     {
         unsigned flags = 0;
-        
+
          if(wflags & shiftKey)   flags |= kbd_shift;
          if(wflags & controlKey) flags |= kbd_ctrl;
 
@@ -488,7 +488,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
     {
 		SInt16 item;
 		Str255 p_msg;
-		
+
 		::CopyCStringToPascal (msg, p_msg);
 		::StandardAlert (kAlertPlainAlert, (const unsigned char*) "\013AGG Message", p_msg, NULL, &item);
 		//::StandardAlert (kAlertPlainAlert, (const unsigned char*) "\pAGG Message", p_msg, NULL, &item);
@@ -507,8 +507,8 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
     {
         UnsignedWide stop;
         ::Microseconds(&stop);
-        return double(stop.lo - 
-                      m_specific->m_sw_start.lo) * 1e6 / 
+        return double(stop.lo -
+                      m_specific->m_sw_start.lo) * 1e6 /
                       double(m_specific->m_sw_freq.lo);
     }
 
@@ -542,7 +542,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 		eventType.eventKind = kEventMouseUp;
 		handlerUPP = NewEventHandlerUPP(DoMouseUp);
 		InstallApplicationEventHandler (handlerUPP, 1, &eventType, this, nil);
-		
+
 		eventType.eventKind = kEventMouseDragged;
 		handlerUPP = NewEventHandlerUPP(DoMouseDragged);
 		InstallApplicationEventHandler (handlerUPP, 1, &eventType, this, nil);
@@ -577,7 +577,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 		// I assume the text is ASCII.
 		// Change to kCFStringEncodingMacRoman, kCFStringEncodingISOLatin1, kCFStringEncodingUTF8 or what else you need.
         SetWindowTitleWithCFString (m_specific->m_window, CFStringCreateWithCStringNoCopy (nil, m_caption, kCFStringEncodingASCII, nil));
-		
+
 		eventType.eventClass = kEventClassWindow;
 		eventType.eventKind = kEventWindowClose;
 
@@ -587,7 +587,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 		eventType.eventKind = kEventWindowDrawContent;
 		handlerUPP = NewEventHandlerUPP(DoWindowDrawContent);
 		InstallWindowEventHandler (m_specific->m_window, handlerUPP, 1, &eventType, this, NULL);
-		
+
 		// Periodic task
 		// Instead of an idle function I use the Carbon event timer.
 		// You may decide to change the wait value which is currently 50 milliseconds.
@@ -605,10 +605,10 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
         on_init();
         on_resize(width, height);
         m_specific->m_redraw_flag = true;
-		
+
   		ShowWindow (m_specific->m_window);
   		SetPortWindowPort (m_specific->m_window);
-		
+
       return true;
     }
 
@@ -616,7 +616,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
     //------------------------------------------------------------------------
     int platform_support::run()
     {
-		
+
 		RunApplicationEventLoop ();
         return true;
     }
@@ -685,7 +685,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
             if(width  == 0) width  = m_specific->m_pmap_window.width();
             if(height == 0) height = m_specific->m_pmap_window.height();
             m_specific->m_pmap_img[idx].create(width, height, org_e(m_specific->m_bpp));
-            m_rbuf_img[idx].attach(m_specific->m_pmap_img[idx].buf(), 
+            m_rbuf_img[idx].attach(m_specific->m_pmap_img[idx].buf(),
                                    m_specific->m_pmap_img[idx].width(),
                                    m_specific->m_pmap_img[idx].height(),
                                    m_flip_y ?
@@ -701,7 +701,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
     void platform_support::force_redraw()
     {
     	Rect	bounds;
-    	
+
         m_specific->m_redraw_flag = true;
         // on_ctrl_change ();
 		on_draw();
@@ -736,7 +736,7 @@ pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData);
 pascal OSStatus DoWindowClose (EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
 {
 	userData;
-	
+
 	QuitApplicationEventLoop ();
 
 	return CallNextEventHandler (nextHandler, theEvent);
@@ -747,7 +747,7 @@ pascal OSStatus DoWindowClose (EventHandlerCallRef nextHandler, EventRef theEven
 pascal OSStatus DoAppQuit (EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
 {
 	userData;
-	
+
 	return CallNextEventHandler (nextHandler, theEvent);
 }
 
@@ -757,7 +757,7 @@ pascal OSStatus DoMouseDown (EventHandlerCallRef nextHandler, EventRef theEvent,
 {
 	Point wheresMyMouse;
 	UInt32 modifier;
-	
+
 	GetEventParameter (theEvent, kEventParamMouseLocation, typeQDPoint, NULL, sizeof(Point), NULL, &wheresMyMouse);
 	GlobalToLocal (&wheresMyMouse);
 	GetEventParameter (theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifier);
@@ -774,10 +774,10 @@ pascal OSStatus DoMouseDown (EventHandlerCallRef nextHandler, EventRef theEvent,
         app->m_specific->m_cur_y = wheresMyMouse.v;
     }
     app->m_specific->m_input_flags = mouse_left | get_key_flags(modifier);
-    
-    app->m_ctrls.set_cur(app->m_specific->m_cur_x, 
+
+    app->m_ctrls.set_cur(app->m_specific->m_cur_x,
                          app->m_specific->m_cur_y);
-    if(app->m_ctrls.on_mouse_button_down(app->m_specific->m_cur_x, 
+    if(app->m_ctrls.on_mouse_button_down(app->m_specific->m_cur_x,
                                          app->m_specific->m_cur_y))
     {
         app->on_ctrl_change();
@@ -785,10 +785,10 @@ pascal OSStatus DoMouseDown (EventHandlerCallRef nextHandler, EventRef theEvent,
     }
     else
     {
-        if(app->m_ctrls.in_rect(app->m_specific->m_cur_x, 
+        if(app->m_ctrls.in_rect(app->m_specific->m_cur_x,
                                 app->m_specific->m_cur_y))
         {
-            if(app->m_ctrls.set_cur(app->m_specific->m_cur_x, 
+            if(app->m_ctrls.set_cur(app->m_specific->m_cur_x,
                                     app->m_specific->m_cur_y))
             {
                 app->on_ctrl_change();
@@ -797,8 +797,8 @@ pascal OSStatus DoMouseDown (EventHandlerCallRef nextHandler, EventRef theEvent,
         }
         else
         {
-            app->on_mouse_button_down(app->m_specific->m_cur_x, 
-                                      app->m_specific->m_cur_y, 
+            app->on_mouse_button_down(app->m_specific->m_cur_x,
+                                      app->m_specific->m_cur_y,
                                       app->m_specific->m_input_flags);
         }
     }
@@ -812,7 +812,7 @@ pascal OSStatus DoMouseUp (EventHandlerCallRef nextHandler, EventRef theEvent, v
 {
 	Point wheresMyMouse;
 	UInt32 modifier;
-	
+
 	GetEventParameter (theEvent, kEventParamMouseLocation, typeQDPoint, NULL, sizeof(Point), NULL, &wheresMyMouse);
 	GlobalToLocal (&wheresMyMouse);
 	GetEventParameter (theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifier);
@@ -830,14 +830,14 @@ pascal OSStatus DoMouseUp (EventHandlerCallRef nextHandler, EventRef theEvent, v
     }
     app->m_specific->m_input_flags = mouse_left | get_key_flags(modifier);
 
-    if(app->m_ctrls.on_mouse_button_up(app->m_specific->m_cur_x, 
+    if(app->m_ctrls.on_mouse_button_up(app->m_specific->m_cur_x,
                                        app->m_specific->m_cur_y))
     {
         app->on_ctrl_change();
         app->force_redraw();
     }
-    app->on_mouse_button_up(app->m_specific->m_cur_x, 
-                            app->m_specific->m_cur_y, 
+    app->on_mouse_button_up(app->m_specific->m_cur_x,
+                            app->m_specific->m_cur_y,
                             app->m_specific->m_input_flags);
 
 	return CallNextEventHandler (nextHandler, theEvent);
@@ -849,7 +849,7 @@ pascal OSStatus DoMouseDragged (EventHandlerCallRef nextHandler, EventRef theEve
 {
 	Point wheresMyMouse;
 	UInt32 modifier;
-	
+
 	GetEventParameter (theEvent, kEventParamMouseLocation, typeQDPoint, NULL, sizeof(Point), NULL, &wheresMyMouse);
 	GlobalToLocal (&wheresMyMouse);
 	GetEventParameter (theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifier);
@@ -869,7 +869,7 @@ pascal OSStatus DoMouseDragged (EventHandlerCallRef nextHandler, EventRef theEve
 
 
     if(app->m_ctrls.on_mouse_move(
-        app->m_specific->m_cur_x, 
+        app->m_specific->m_cur_x,
         app->m_specific->m_cur_y,
         (app->m_specific->m_input_flags & mouse_left) != 0))
     {
@@ -878,8 +878,8 @@ pascal OSStatus DoMouseDragged (EventHandlerCallRef nextHandler, EventRef theEve
     }
     else
     {
-        app->on_mouse_move(app->m_specific->m_cur_x, 
-                           app->m_specific->m_cur_y, 
+        app->on_mouse_move(app->m_specific->m_cur_x,
+                           app->m_specific->m_cur_y,
                            app->m_specific->m_input_flags);
     }
 
@@ -892,14 +892,14 @@ pascal OSStatus DoKeyDown (EventHandlerCallRef nextHandler, EventRef theEvent, v
 {
 	char key_code;
 	UInt32 modifier;
-	
+
 	GetEventParameter (theEvent, kEventParamKeyMacCharCodes, typeChar, NULL, sizeof(char), NULL, &key_code);
 	GetEventParameter (theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifier);
 
 	platform_support * app = reinterpret_cast<platform_support*>(userData);
 
 	app->m_specific->m_last_translated_key = 0;
-    switch(modifier) 
+    switch(modifier)
     {
         case controlKey:
             app->m_specific->m_input_flags |= kbd_ctrl;
@@ -940,7 +940,7 @@ pascal OSStatus DoKeyDown (EventHandlerCallRef nextHandler, EventRef theEvent, v
             break;
 
 		//On a Mac, screenshots are handled by the system.
-        case key_f2:                        
+        case key_f2:
             app->copy_window_to_img(agg::platform_support::max_images - 1);
             app->save_img(agg::platform_support::max_images - 1, "screenshot");
             break;
@@ -970,14 +970,14 @@ pascal OSStatus DoKeyUp (EventHandlerCallRef nextHandler, EventRef theEvent, voi
 {
 	char key_code;
 	UInt32 modifier;
-	
+
 	GetEventParameter (theEvent, kEventParamKeyMacCharCodes, typeChar, NULL, sizeof(char), NULL, &key_code);
 	GetEventParameter (theEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifier);
 
 	platform_support * app = reinterpret_cast<platform_support*>(userData);
 
     app->m_specific->m_last_translated_key = 0;
-    switch(modifier) 
+    switch(modifier)
     {
         case controlKey:
             app->m_specific->m_input_flags &= ~kbd_ctrl;
@@ -987,7 +987,7 @@ pascal OSStatus DoKeyUp (EventHandlerCallRef nextHandler, EventRef theEvent, voi
             app->m_specific->m_input_flags &= ~kbd_shift;
             break;
     }
-    
+
 	return CallNextEventHandler (nextHandler, theEvent);
 }
 
@@ -1015,7 +1015,7 @@ pascal OSStatus DoWindowDrawContent (EventHandlerCallRef nextHandler, EventRef t
 pascal void DoPeriodicTask (EventLoopTimerRef theTimer, void* userData)
 {
     platform_support * app = reinterpret_cast<platform_support*>(userData);
-    
+
     if(!app->wait_mode())
 		app->on_idle();
 }
@@ -1040,13 +1040,13 @@ int main(int argc, char* argv[])
 #if defined(__MWERKS__)
 	// argc = ccommand (&argv);
 #endif
-    
-    // Check if we are launched by double-clicking under OSX 
+
+    // Check if we are launched by double-clicking under OSX
 	// Get rid of extra argument, this will confuse the standard argument parsing
 	// calls used in the examples to get the name of the image file to be used
     if ( argc >= 2 && strncmp (argv[1], "-psn", 4) == 0 ) {
         argc = 1;
-    } 
+    }
 
 launch:
     return agg_main(argc, argv);

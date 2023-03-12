@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -44,13 +44,13 @@ namespace agg
 
     public:
         void        destroy();
-        void        create(unsigned width, 
-                           unsigned height, 
+        void        create(unsigned width,
+                           unsigned height,
                            org_e    org,
                            unsigned clear_val=256);
         HBITMAP     create_dib_section(HDC h_dc,
-                                       unsigned width, 
-                                       unsigned height, 
+                                       unsigned width,
+                                       unsigned height,
                                        org_e    org,
                                        unsigned clear_val=256);
 
@@ -62,13 +62,13 @@ namespace agg
         bool        load_from_bmp(const char* filename);
         bool        save_as_bmp(const char* filename) const;
 
-        void        draw(HDC h_dc, 
-                         const RECT* device_rect=0, 
+        void        draw(HDC h_dc,
+                         const RECT* device_rect=0,
                          const RECT* bmp_rect=0) const;
         void        draw(HDC h_dc, int x, int y, double scale=1.0) const;
 
-        void        blend(HDC h_dc, 
-                          const RECT* device_rect=0, 
+        void        blend(HDC h_dc,
+                          const RECT* device_rect=0,
                           const RECT* bmp_rect=0) const;
         void        blend(HDC h_dc, int x, int y, double scale=1.0) const;
 
@@ -82,21 +82,21 @@ namespace agg
         //Auxiliary static functions
         static unsigned calc_full_size(BITMAPINFO *bmp);
         static unsigned calc_header_size(BITMAPINFO *bmp);
-        static unsigned calc_palette_size(unsigned clr_used, 
+        static unsigned calc_palette_size(unsigned clr_used,
                                           unsigned bits_per_pixel);
         static unsigned calc_palette_size(BITMAPINFO *bmp);
         static unsigned char* calc_img_ptr(BITMAPINFO *bmp);
-        static BITMAPINFO* create_bitmap_info(unsigned width, 
-                                              unsigned height, 
+        static BITMAPINFO* create_bitmap_info(unsigned width,
+                                              unsigned height,
                                               unsigned bits_per_pixel);
         static void     create_gray_scale_palette(BITMAPINFO *bmp);
         static unsigned calc_row_len(unsigned width, unsigned bits_per_pixel);
-        
+
     private:
         pixel_map(const pixel_map&);
         const pixel_map& operator = (const pixel_map&);
         void create_from_bmp(BITMAPINFO *bmp);
-        
+
         HBITMAP create_dib_section_from_args(HDC h_dc,
                                              unsigned width,
                                              unsigned height,

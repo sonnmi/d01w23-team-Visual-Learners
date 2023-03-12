@@ -847,7 +847,7 @@ class HandlerPatchCollection(HandlerPatch):
         legend_handle.set_transform(get_first(orig_handle.get_transforms()))
         legend_handle.set_figure(orig_handle.get_figure())
         # Alpha is already taken into account by the color attributes.
-    
+
     def create_artists(self, legend, orig_handle,
                        xdescent, ydescent, width, height, fontsize, trans):
         # docstring inherited
