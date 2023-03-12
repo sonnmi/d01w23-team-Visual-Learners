@@ -35,7 +35,8 @@ from matplotlib import _api, cbook
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 import matplotlib.collections as mcoll
-
+import matplotlib.patches as mpatches
+import matplotlib.legend as mlegend
 
 def update_from_first_child(tgt, src):
     first_child = next(iter(src.get_children()), None)
@@ -820,6 +821,11 @@ class HandlerPatchCollection(HandlerPatch):
     Handler for `.PatchCollection` instances.
     """
     def _default_update_prop(self, legend_handle, orig_handle):
+        if not isinstance(legend_handle, mpatches.Patch):
+            raise TypeError("legend_handle must be a Patch object")
+        if not isinstance(orig_handle, mcoll.PatchCollection):
+            raise TypeError("orig_handle must be a PatchCollection object")
+        
         def first_color(colors):
             if colors.size == 0:
                 return (0, 0, 0, 0)
@@ -851,6 +857,11 @@ class HandlerPatchCollection(HandlerPatch):
     def create_artists(self, legend, orig_handle,
                        xdescent, ydescent, width, height, fontsize, trans):
         # docstring inherited
+        if not isinstance(legend, mlegend.Legend):
+            raise TypeError("legend must be a Legend object")
+        if not isinstance(orig_handle, mcoll.PatchCollection):
+            raise TypeError("orig_handle must be a PatchCollection object")
+        
         p = self._create_patch(legend, orig_handle,
                                xdescent, ydescent, width, height, fontsize)
         self.update_prop(p, orig_handle, legend)

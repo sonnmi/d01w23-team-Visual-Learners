@@ -1327,3 +1327,108 @@ def test_legend_patchcollection_custom():
     assert fc == (0.0, 0.0, 1.0, 1.0)
     assert ec == (0.0, 0.0, 0.0, 1.0)
     assert isinstance(handlerPatches[0], mpatches.Ellipse)
+
+
+def test_patchcollection_create_artists_happy():
+    # Test that create_artists returns a list of artists with valid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels)
+    legend_handler = HandlerPatchCollection()
+
+    xdesc, ydesc = 5, 10
+    width, height = 10, 5
+    fontsize = 12
+    artists = legend_handler.create_artists(legend, pc, xdesc, ydesc, width, height, fontsize, None)
+    artist = artists[0]
+    fc = artist.get_facecolor()
+    ec = artist.get_edgecolor()
+
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(artist, mpatches.Rectangle)
+
+
+def test_patchcollection_create_artists_sad():
+    # Test that create_artists throws an error with invalid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, labels)
+    legend_handler = HandlerPatchCollection()
+
+    xdesc = 5
+    width, height = 10, 5
+    fontsize = 12
+    with pytest.raises(TypeError):
+        legend_handler.create_artists(None, pc, xdesc, 'ydesc', width, height, fontsize, None)
+
+
+def test_patchcollection_create_artists_custom():
+    # Test that create_artists returns a list of artists with a custom patch function (and valid args)
+    def create_ellipse(legend, orig_handle, xdescent, ydescent, width, height, fontsize):
+        center = 0.5 * width - 0.5 * xdescent, 0.5 * height - 0.5 * ydescent
+        p = mpatches.Ellipse(xy=center, width=width + xdescent, height=height + ydescent)
+        return p
+
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels)
+    legend_handler = HandlerPatchCollection(create_ellipse)
+
+    xdesc, ydesc = 5, 10
+    width, height = 10, 5
+    fontsize = 12
+    artists = legend_handler.create_artists(legend, pc, xdesc, ydesc, width, height, fontsize, None)
+    artist = artists[0]
+    fc = artist.get_facecolor()
+    ec = artist.get_edgecolor()
+
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(artist, mpatches.Ellipse)
+
+
+def test_patchcollection_default_update_prop_happy():
+    # Test that _default_update_prop updates legend_handle with valid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    legend = ax.legend()
+    handle = legend.get_patches()[0]
+    legend_handler = HandlerPatchCollection()
+    legend_handler._default_update_prop(handle, pc)
+    fc = handle.get_facecolor()
+    ec = handle.get_edgecolor()
+
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handle, mpatches.Rectangle)
+
+
+def test_patchcollection_default_update_prop_sad():
+    # Test that _default_update_prop throws an error with invalid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    legend = ax.legend()
+    handle = legend.get_patches()[0]
+    legend_handler = HandlerPatchCollection()
+
+    with pytest.raises(TypeError):
+        legend_handler._default_update_prop(handle, None)
