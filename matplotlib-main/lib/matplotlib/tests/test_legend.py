@@ -19,6 +19,8 @@ from matplotlib.legend_handler import HandlerTuple
 import matplotlib.legend as mlegend
 from matplotlib import rc_context
 from matplotlib.font_manager import FontProperties
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Polygon
 
 
 def test_legend_ordereddict():
@@ -124,6 +126,32 @@ def test_legend_auto5():
 
     assert_allclose(leg_bboxes[1].bounds, leg_bboxes[0].bounds)
 
+# deliverable3
+@image_comparison(baseline_images=['test_one_polycollection_auto_scale'], remove_text=True,
+                  extensions=['png'], style='mpl20')
+def test_one_polycollection_auto_scale():
+    """Autoscale test with one polycollection"""
+    fig, axs = plt.subplots()
+    p1, p2 = Polygon([[-60,0],[100,100],[200,0]], label="p1"), Polygon([[400,0],[500,100],[600,0]], label="p2")
+    p = PatchCollection([p1,p2], label="asd")
+    axs.add_collection(p, autolim=True)
+    axs.legend()
+    assert axs.get_xlim()[0] == -60 and axs.get_xlim()[1] == 600
+    assert axs.get_ylim()[0] == 0 and axs.get_ylim()[1] == 100
+
+# deliverable3
+@image_comparison(baseline_images=['test_multiple_polycollection_auto_scale'], remove_text=True,
+                  extensions=['png'], style='mpl20')
+def test_multiple_polycollection_auto_scale():
+    """Autoscale test with multiple polycollections"""
+    fig, axs = plt.subplots()
+    p1 = PatchCollection([Polygon([[-100,0],[100,-100],[200,0]]), Polygon([[700,0],[500,200],[300,0]])], label="p1")
+    p2 = PatchCollection([Polygon([[700,-200],[720,0],[800,0]])], label="p2")
+    axs.add_collection(p1, autolim=True)
+    axs.add_collection(p2, autolim=True)
+    axs.legend()
+    assert axs.get_xlim()[0] == -100 and axs.get_xlim()[1] == 800
+    assert axs.get_ylim()[0] == -200 and axs.get_ylim()[1] == 200
 
 @image_comparison(['legend_various_labels'], remove_text=True)
 def test_various_labels():
