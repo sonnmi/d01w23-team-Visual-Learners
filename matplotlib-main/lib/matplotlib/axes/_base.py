@@ -2995,7 +2995,8 @@ class _AxesBase(martist.Artist):
 
         for title in titles:
             adjustment = 0
-            bbox1, bbox2 = self.xaxis._get_tick_boxes_siblings(renderer=renderer)
+            bbox1, bbox2 = self.xaxis._get_tick_boxes_siblings(
+                renderer=renderer, title_align=True)
             try:
                 spine = self.axes.spines['top']
                 spinebbox = spine.get_window_extent()
