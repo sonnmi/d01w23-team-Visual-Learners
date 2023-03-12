@@ -16,6 +16,7 @@ import matplotlib.transforms as mtransforms
 import matplotlib.collections as mcollections
 import matplotlib.lines as mlines
 from matplotlib.legend_handler import HandlerTuple
+from matplotlib.legend_handler import HandlerPatchCollection
 import matplotlib.legend as mlegend
 from matplotlib import rc_context
 from matplotlib.font_manager import FontProperties
@@ -1219,3 +1220,110 @@ def test_ncol_ncols(fig_test, fig_ref):
     ncols = 3
     fig_test.legend(strings, ncol=ncols)
     fig_ref.legend(strings, ncols=ncols)
+
+
+def test_legend_patchcollection_single():
+    # Test that a Patch Collection of just one Patch works
+    fig, ax = plt.subplots()
+    p = mpatches.Ellipse([5,5], 5, 10, facecolor='red', edgecolor='black')
+    pc = mcollections.PatchCollection([p], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels)
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc = handlerPatches[0].get_facecolor()
+    ec = handlerPatches[0].get_edgecolor()
+
+    assert num_entries == 1
+    assert labels[0] == 'Patches'
+    assert fc == (1.0, 0.0, 0.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Rectangle)
+
+
+def test_legend_patchcollection_first():
+    # Test that a Patch collection takes the style of the first Patch to display in the legend
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    p1 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc = mcollections.PatchCollection([p0, p1], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels)
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc = handlerPatches[0].get_facecolor()
+    ec = handlerPatches[0].get_edgecolor()
+
+    assert num_entries == 1
+    assert labels[0] == 'Patches'
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Rectangle)
+
+
+def test_legend_patchcollection_many():
+    # Test that legend can support multiple PatchCollections
+    fig, ax = plt.subplots()
+    p00 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='red')
+    p01 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc0 = mcollections.PatchCollection([p00, p01], match_original=True, label='Patches0')
+    ax.add_collection(pc0)
+
+    p10 = mpatches.Ellipse([5,5], 5, 10, facecolor='red', edgecolor='blue')
+    p11 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc1 = mcollections.PatchCollection([p10, p11], match_original=True, label='Patches1')
+    ax.add_collection(pc1)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels)
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc0 = handlerPatches[0].get_facecolor()
+    ec0 = handlerPatches[0].get_edgecolor()
+    fc1 = handlerPatches[1].get_facecolor()
+    ec1 = handlerPatches[1].get_edgecolor()
+
+    assert num_entries == 2
+    assert labels[0] == 'Patches0'
+    assert labels[1] == 'Patches1'
+    assert fc0 == (0.0, 0.0, 1.0, 1.0)
+    assert ec0 == (1.0, 0.0, 0.0, 1.0)
+    assert fc1 == (1.0, 0.0, 0.0, 1.0)
+    assert ec1 == (0.0, 0.0, 1.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Rectangle)
+    assert isinstance(handlerPatches[1], mpatches.Rectangle)
+
+
+def test_legend_patchcollection_custom():
+    # Test that we can pass a custom patch function to change the style of the legend key of PatchCollection entries
+    def create_ellipse(legend, orig_handle, xdescent, ydescent, width, height, fontsize):
+        center = 0.5 * width - 0.5 * xdescent, 0.5 * height - 0.5 * ydescent
+        p = mpatches.Ellipse(xy=center, width=width + xdescent, height=height + ydescent)
+        return p
+
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    p1 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc = mcollections.PatchCollection([p0, p1], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels, handler_map={mcollections.PatchCollection: HandlerPatchCollection(create_ellipse)})
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc = handlerPatches[0].get_facecolor()
+    ec = handlerPatches[0].get_edgecolor()
+
+    assert num_entries == 1
+    assert labels[0] == 'Patches'
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Ellipse)
