@@ -2070,10 +2070,11 @@ class Axis(martist.Artist):
             self.set_ticklabels(labels, minor=minor, **kwargs)
         return result
 
-    def _get_tick_boxes_siblings(self, renderer):
+    def _get_tick_boxes_siblings(self, renderer, title_align=False):
         """
         Get the bounding boxes for this `.axis` and its siblings
-        as set by `.Figure.align_xlabels` or  `.Figure.align_ylabels`.
+        as set by `.Figure.align_xlabels` or  `.Figure.align_ylabels`
+        or '.Figure.align_titles'.
 
         By default, it just gets bboxes for *self*.
         """
@@ -2081,7 +2082,10 @@ class Axis(martist.Artist):
         name = self._get_axis_name()
         if name not in self.figure._align_label_groups:
             return [], []
-        grouper = self.figure._align_label_groups[name]
+        if title_align is False:
+            grouper = self.figure._align_label_groups[name]
+        else:
+            grouper = self.figure._align_title_group["title"]
         bboxes = []
         bboxes2 = []
         # If we want to align labels from other Axes:
