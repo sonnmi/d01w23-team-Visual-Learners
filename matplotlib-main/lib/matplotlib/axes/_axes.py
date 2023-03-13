@@ -3939,12 +3939,11 @@ class Axes(_AxesBase):
             capprops = {}
         if medianprops is None:
             medianprops = {}
-        # if not defined then set default to butt
-            medianprops['solid_capstyle'] = 'butt'
-        # if defined but solid_capstyle not 
-        # defined, change type to butt
+        # if length changed but solid_capstyle not 
+        # change cap type to butt
         if medianprops.get('solid_capstyle', None) is None:
-            medianprops['solid_capstyle'] = 'butt'
+            if not medianprops.get('linewidth', None) is None:
+                medianprops['solid_capstyle'] = 'butt'
         if meanprops is None:
             meanprops = {}
         if flierprops is None:
