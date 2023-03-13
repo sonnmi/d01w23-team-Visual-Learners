@@ -138,7 +138,6 @@ def test_polycollection_auto_scale():
     assert axs.get_xlim()[1] == 600
     assert axs.get_ylim()[1] == 100
 
-# deliverable3
 @image_comparison(baseline_images=['test_one_polycollection_auto_scale'], remove_text=True,
                   extensions=['png'], style='mpl20')
 def test_one_polycollection_auto_scale():
@@ -153,7 +152,6 @@ def test_one_polycollection_auto_scale():
     assert axs.get_xlim()[0] == -60 and axs.get_xlim()[1] == 600
     assert axs.get_ylim()[0] == 0 and axs.get_ylim()[1] == 100
 
-# deliverable3
 @image_comparison(baseline_images=['test_multiple_polycollections_auto_scale'], remove_text=True,
                   extensions=['png'], style='mpl20')
 def test_multiple_polycollections_auto_scale():
