@@ -4272,7 +4272,7 @@ recent changes, please refer to the :doc:`/users/release_notes`.
 2006-01-11
     Released 0.86.1
 
-2006-01-11 
+2006-01-11
     Fixed setup.py for win32 build and added rc template to the MANIFEST.in
 
 2006-01-10

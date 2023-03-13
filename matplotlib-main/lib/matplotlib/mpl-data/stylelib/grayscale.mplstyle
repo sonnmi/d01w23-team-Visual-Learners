@@ -26,4 +26,3 @@ image.cmap: gray
 
 savefig.facecolor: white
 savefig.edgecolor: white
-

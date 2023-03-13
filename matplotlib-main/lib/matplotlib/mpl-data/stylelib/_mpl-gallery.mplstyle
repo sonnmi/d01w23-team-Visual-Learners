@@ -4,7 +4,7 @@ axes.grid: True
 axes.axisbelow: True
 
 figure.figsize: 2, 2
-# make it so the axes labels don't show up.  Obviously 
+# make it so the axes labels don't show up.  Obviously
 # not good style for any quantitative analysis:
 figure.subplot.left: 0.01
 figure.subplot.right: 0.99

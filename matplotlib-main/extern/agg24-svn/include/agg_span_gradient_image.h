@@ -2,7 +2,7 @@
 // AGG Contribution Pack - Gradients 1 (AGG CP - Gradients 1)
 // http://milan.marusinec.sk/aggcp
 //
-// For Anti-Grain Geometry - Version 2.4 
+// For Anti-Grain Geometry - Version 2.4
 // http://www.antigrain.org
 //
 // Contribution Created By:
@@ -46,7 +46,7 @@ namespace agg
 
 		static unsigned size() { return 1; }
 
-		const color_type& operator [] (unsigned i) const 
+		const color_type& operator [] (unsigned i) const
 		{
 			return m_color;
 		}
@@ -54,7 +54,7 @@ namespace agg
 		color_type* operator [] (unsigned i)
 		{
 			return &m_color;
-		}	        
+		}
 	};
 
 	//==========================================================gradient_image
@@ -182,7 +182,7 @@ namespace agg
 		}
 
 	};
-	
+
 }
 
 #endif

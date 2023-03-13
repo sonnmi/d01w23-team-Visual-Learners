@@ -101,6 +101,43 @@ def test_align_labels_stray_axes():
     np.testing.assert_allclose(yn[::2], yn[1::2])
 
 
+def test_align_titles_single_row():
+    fig, axs = plt.subplots(1, 2)
+    for tick in axs[0].get_xticklabels():
+        tick.set_rotation(55)
+    axs[0].xaxis.set_ticks_position("top")
+    axs[0].set_xlabel('XLabel 0')
+    axs[0].set_title('test1')
+    axs[1].set_xlabel('XLabel 1')
+    axs[1].set_title('test2')
+    axs[1].set_title('test3', loc='right')
+    y_title1 = axs[0].title.get_position()[1] * axs[0].bbox.y1
+    y_title2 = axs[1].title.get_position()[1] * axs[1].bbox.y1
+    y_title3 = axs[1]._right_title.get_position()[1] * axs[1].bbox.y1
+    assert y_title1 == y_title2 == y_title3
+
+
+def test_align_titles_multiple_row():
+    fig, axs = plt.subplots(2, 2)
+    for tick in axs[0][0].get_xticklabels():
+        tick.set_rotation(55)
+    axs[0][0].xaxis.set_ticks_position("top")
+    axs[0][0].set_xlabel('XLabel 0')
+    axs[0][0].set_title('test1')
+    axs[0][1].set_xlabel('XLabel 1')
+    axs[0][1].set_title('test2')
+    axs[1][0].imshow(np.zeros((5, 3)))
+    axs[1][0].set_title('test4')
+    axs[1][1].imshow(np.zeros((3, 5)))
+    axs[1][1].set_title('test5')
+    y_title1 = axs[0][0].title.get_position()[1] * axs[0][0].bbox.y1
+    y_title2 = axs[0][1].title.get_position()[1] * axs[0][1].bbox.y1
+    y_title4 = axs[1][0].title.get_position()[1] * axs[1][0].bbox.y1
+    y_title5 = axs[1][1].title.get_position()[1] * axs[1][1].bbox.y1
+    assert y_title1 == y_title2
+    assert y_title4 == y_title5
+
+
 def test_figure_label():
     # pyplot figure creation, selection, and closing with label/number/instance
     plt.close('all')
