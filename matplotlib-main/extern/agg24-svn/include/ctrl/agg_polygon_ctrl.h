@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -31,7 +31,7 @@ namespace agg
     class simple_polygon_vertex_source
     {
     public:
-        simple_polygon_vertex_source(const double* polygon, unsigned np, 
+        simple_polygon_vertex_source(const double* polygon, unsigned np,
                                      bool roundoff = false,
                                      bool close = true) :
             m_polygon(polygon),
@@ -53,7 +53,7 @@ namespace agg
         unsigned vertex(double* x, double* y)
         {
             if(m_vertex > m_num_points) return path_cmd_stop;
-            if(m_vertex == m_num_points) 
+            if(m_vertex == m_num_points)
             {
                 ++m_vertex;
                 return path_cmd_end_poly | (m_close ? path_flags_close : 0);
@@ -90,7 +90,7 @@ namespace agg
         double yn(unsigned n) const { return m_polygon[n * 2 + 1]; }
         double& xn(unsigned n) { return m_polygon[n * 2];     }
         double& yn(unsigned n) { return m_polygon[n * 2 + 1]; }
-    
+
         const double* polygon() const { return &m_polygon[0]; }
 
         void   line_width(double w) { m_stroke.width(w); }
@@ -146,9 +146,9 @@ namespace agg
             m_color(rgba(0.0, 0.0, 0.0))
         {
         }
-          
+
         void line_color(const ColorT& c) { m_color = c; }
-        const ColorT& color(unsigned i) const { return m_color; } 
+        const ColorT& color(unsigned i) const { return m_color; }
 
     private:
         polygon_ctrl(const polygon_ctrl<ColorT>&);
@@ -163,4 +163,3 @@ namespace agg
 }
 
 #endif
-

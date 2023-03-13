@@ -16,9 +16,12 @@ import matplotlib.transforms as mtransforms
 import matplotlib.collections as mcollections
 import matplotlib.lines as mlines
 from matplotlib.legend_handler import HandlerTuple
+from matplotlib.legend_handler import HandlerPatchCollection
 import matplotlib.legend as mlegend
 from matplotlib import rc_context
 from matplotlib.font_manager import FontProperties
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Polygon
 
 
 def test_legend_ordereddict():
@@ -124,6 +127,46 @@ def test_legend_auto5():
 
     assert_allclose(leg_bboxes[1].bounds, leg_bboxes[0].bounds)
 
+@image_comparison(baseline_images=['test_polycollection_auto_scale'], remove_text=True,
+                  extensions=['png'], style='mpl20')
+def test_polycollection_auto_scale():
+    """Autoscale test with an example in the issue #23998"""
+    fig, axs = plt.subplots()
+    p1, p2 = Polygon([[0,0],[100,100],[200,0]], label="p1"), Polygon([[400,0],[500,100],[600,0]], label="p2")
+    p = PatchCollection([p1,p2], label="asd")
+    axs.add_collection(p, autolim=True)
+    axs.legend()
+    assert axs.get_xlim()[1] == 600
+    assert axs.get_ylim()[1] == 100
+
+@image_comparison(baseline_images=['test_one_polycollection_auto_scale'], remove_text=True,
+                  extensions=['png'], style='mpl20')
+def test_one_polycollection_auto_scale():
+    """Autoscale test with one polycollection"""
+    fig, axs = plt.subplots()
+    p1 = Polygon([[-60,0],[100,100],[200,0]], label="p1")
+    p2 = Polygon([[400,0],[500,100],[600,0]], label="p2")
+    p3 = Polygon([[300,0],[350,100],[400,0]], label="p2")
+    p = PatchCollection([p1,p2,p3], label="p")
+    axs.add_collection(p, autolim=True)
+    axs.legend()
+    assert axs.get_xlim()[0] == -60 and axs.get_xlim()[1] == 600
+    assert axs.get_ylim()[0] == 0 and axs.get_ylim()[1] == 100
+
+@image_comparison(baseline_images=['test_multiple_polycollections_auto_scale'], remove_text=True,
+                  extensions=['png'], style='mpl20')
+def test_multiple_polycollections_auto_scale():
+    """Autoscale test with multiple polycollections"""
+    fig, axs = plt.subplots()
+    p1 = PatchCollection([Polygon([[-100,0],[100,-100],[200,0]]), Polygon([[700,0],[500,200],[300,0]])], label="p1")
+    p2 = PatchCollection([Polygon([[700,-200],[720,0],[800,0]])], label="p2")
+    p3 = PatchCollection([Polygon([[200,-200],[230,0],[300,0]])], label="p2")
+    axs.add_collection(p1, autolim=True)
+    axs.add_collection(p2, autolim=True)
+    axs.add_collection(p3, autolim=True)
+    axs.legend()
+    assert axs.get_xlim()[0] == -100 and axs.get_xlim()[1] == 800
+    assert axs.get_ylim()[0] == -200 and axs.get_ylim()[1] == 200
 
 @image_comparison(['legend_various_labels'], remove_text=True)
 def test_various_labels():
@@ -1219,3 +1262,215 @@ def test_ncol_ncols(fig_test, fig_ref):
     ncols = 3
     fig_test.legend(strings, ncol=ncols)
     fig_ref.legend(strings, ncols=ncols)
+
+
+def test_legend_patchcollection_single():
+    # Test that a Patch Collection of just one Patch works
+    fig, ax = plt.subplots()
+    p = mpatches.Ellipse([5,5], 5, 10, facecolor='red', edgecolor='black')
+    pc = mcollections.PatchCollection([p], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels)
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc = handlerPatches[0].get_facecolor()
+    ec = handlerPatches[0].get_edgecolor()
+
+    assert num_entries == 1
+    assert labels[0] == 'Patches'
+    assert fc == (1.0, 0.0, 0.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Rectangle)
+
+
+def test_legend_patchcollection_first():
+    # Test that a Patch collection takes the style of the first Patch to display in the legend
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    p1 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc = mcollections.PatchCollection([p0, p1], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels)
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc = handlerPatches[0].get_facecolor()
+    ec = handlerPatches[0].get_edgecolor()
+
+    assert num_entries == 1
+    assert labels[0] == 'Patches'
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Rectangle)
+
+
+def test_legend_patchcollection_many():
+    # Test that legend can support multiple PatchCollections
+    fig, ax = plt.subplots()
+    p00 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='red')
+    p01 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc0 = mcollections.PatchCollection([p00, p01], match_original=True, label='Patches0')
+    ax.add_collection(pc0)
+
+    p10 = mpatches.Ellipse([5,5], 5, 10, facecolor='red', edgecolor='blue')
+    p11 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc1 = mcollections.PatchCollection([p10, p11], match_original=True, label='Patches1')
+    ax.add_collection(pc1)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels)
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc0 = handlerPatches[0].get_facecolor()
+    ec0 = handlerPatches[0].get_edgecolor()
+    fc1 = handlerPatches[1].get_facecolor()
+    ec1 = handlerPatches[1].get_edgecolor()
+
+    assert num_entries == 2
+    assert labels[0] == 'Patches0'
+    assert labels[1] == 'Patches1'
+    assert fc0 == (0.0, 0.0, 1.0, 1.0)
+    assert ec0 == (1.0, 0.0, 0.0, 1.0)
+    assert fc1 == (1.0, 0.0, 0.0, 1.0)
+    assert ec1 == (0.0, 0.0, 1.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Rectangle)
+    assert isinstance(handlerPatches[1], mpatches.Rectangle)
+
+
+def test_legend_patchcollection_custom():
+    # Test that we can pass a custom patch function to change the style of the legend key of PatchCollection entries
+    def create_ellipse(legend, orig_handle, xdescent, ydescent, width, height, fontsize):
+        center = 0.5 * width - 0.5 * xdescent, 0.5 * height - 0.5 * ydescent
+        p = mpatches.Ellipse(xy=center, width=width + xdescent, height=height + ydescent)
+        return p
+
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    p1 = mpatches.Rectangle([10,10], 10, 5, facecolor='red', edgecolor='yellow')
+    pc = mcollections.PatchCollection([p0, p1], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    handler = ax.legend(handles, labels, handler_map={mcollections.PatchCollection: HandlerPatchCollection(create_ellipse)})
+    handlerPatches = handler.get_patches()
+
+    num_entries = len(handles)
+    fc = handlerPatches[0].get_facecolor()
+    ec = handlerPatches[0].get_edgecolor()
+
+    assert num_entries == 1
+    assert labels[0] == 'Patches'
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handlerPatches[0], mpatches.Ellipse)
+
+
+def test_patchcollection_create_artists_happy():
+    # Test that create_artists returns a list of artists with valid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels)
+    legend_handler = HandlerPatchCollection()
+
+    xdesc, ydesc = 5, 10
+    width, height = 10, 5
+    fontsize = 12
+    artists = legend_handler.create_artists(legend, pc, xdesc, ydesc, width, height, fontsize, None)
+    artist = artists[0]
+    fc = artist.get_facecolor()
+    ec = artist.get_edgecolor()
+
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(artist, mpatches.Rectangle)
+
+
+def test_patchcollection_create_artists_sad():
+    # Test that create_artists throws an error with invalid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, labels)
+    legend_handler = HandlerPatchCollection()
+
+    xdesc = 5
+    width, height = 10, 5
+    fontsize = 12
+    with pytest.raises(TypeError):
+        legend_handler.create_artists(None, pc, xdesc, 'ydesc', width, height, fontsize, None)
+
+
+def test_patchcollection_create_artists_custom():
+    # Test that create_artists returns a list of artists with a custom patch function (and valid args)
+    def create_ellipse(legend, orig_handle, xdescent, ydescent, width, height, fontsize):
+        center = 0.5 * width - 0.5 * xdescent, 0.5 * height - 0.5 * ydescent
+        p = mpatches.Ellipse(xy=center, width=width + xdescent, height=height + ydescent)
+        return p
+
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    handles, labels = ax.get_legend_handles_labels()
+    legend = ax.legend(handles, labels)
+    legend_handler = HandlerPatchCollection(create_ellipse)
+
+    xdesc, ydesc = 5, 10
+    width, height = 10, 5
+    fontsize = 12
+    artists = legend_handler.create_artists(legend, pc, xdesc, ydesc, width, height, fontsize, None)
+    artist = artists[0]
+    fc = artist.get_facecolor()
+    ec = artist.get_edgecolor()
+
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(artist, mpatches.Ellipse)
+
+
+def test_patchcollection_default_update_prop_happy():
+    # Test that _default_update_prop updates legend_handle with valid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    legend = ax.legend()
+    handle = legend.get_patches()[0]
+    legend_handler = HandlerPatchCollection()
+    legend_handler._default_update_prop(handle, pc)
+    fc = handle.get_facecolor()
+    ec = handle.get_edgecolor()
+
+    assert fc == (0.0, 0.0, 1.0, 1.0)
+    assert ec == (0.0, 0.0, 0.0, 1.0)
+    assert isinstance(handle, mpatches.Rectangle)
+
+
+def test_patchcollection_default_update_prop_sad():
+    # Test that _default_update_prop throws an error with invalid arguments
+    fig, ax = plt.subplots()
+    p0 = mpatches.Ellipse([5,5], 5, 10, facecolor='blue', edgecolor='black')
+    pc = mcollections.PatchCollection([p0], match_original=True, label='Patches')
+    ax.add_collection(pc)
+
+    legend = ax.legend()
+    handle = legend.get_patches()[0]
+    legend_handler = HandlerPatchCollection()
+
+    with pytest.raises(TypeError):
+        legend_handler._default_update_prop(handle, None)

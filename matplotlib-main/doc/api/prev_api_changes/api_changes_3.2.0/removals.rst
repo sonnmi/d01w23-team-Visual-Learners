@@ -80,4 +80,3 @@ know what interactive framework is required by a canvas class.
 ``backend_qt4.FigureCanvasQT5``, which is an alias for
 ``backend_qt5.FigureCanvasQT`` (but only exists under that name in
 ``backend_qt4``), has been removed.
-

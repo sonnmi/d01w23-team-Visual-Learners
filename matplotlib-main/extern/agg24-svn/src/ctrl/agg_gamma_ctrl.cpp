@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -92,10 +92,10 @@ namespace agg
 
 
     //------------------------------------------------------------------------
-    void gamma_ctrl_impl::text_size(double h, double w) 
-    { 
-        m_text_width = w; 
-        m_text_height = h; 
+    void gamma_ctrl_impl::text_size(double h, double w)
+    {
+        m_text_width = w;
+        m_text_height = h;
         m_yc2 = m_y2 - m_text_height * 2.0;
         m_yt1 = m_y2 - m_text_height * 2.0;
         calc_spline_box();
@@ -104,10 +104,10 @@ namespace agg
 
     //------------------------------------------------------------------------
     void gamma_ctrl_impl::border_width(double t, double extra)
-    { 
-        m_border_width = t; 
+    {
+        m_border_width = t;
         m_border_extra = extra;
-        calc_spline_box(); 
+        calc_spline_box();
     }
 
     //------------------------------------------------------------------------
@@ -137,34 +137,34 @@ namespace agg
 
         case 0:                 // Background
             m_vertex = 0;
-            m_vx[0] = m_x1 - m_border_extra; 
+            m_vx[0] = m_x1 - m_border_extra;
             m_vy[0] = m_y1 - m_border_extra;
-            m_vx[1] = m_x2 + m_border_extra; 
+            m_vx[1] = m_x2 + m_border_extra;
             m_vy[1] = m_y1 - m_border_extra;
-            m_vx[2] = m_x2 + m_border_extra; 
+            m_vx[2] = m_x2 + m_border_extra;
             m_vy[2] = m_y2 + m_border_extra;
-            m_vx[3] = m_x1 - m_border_extra; 
+            m_vx[3] = m_x1 - m_border_extra;
             m_vy[3] = m_y2 + m_border_extra;
             break;
 
         case 1:                 // Border
             m_vertex = 0;
-            m_vx[0] = m_x1; 
+            m_vx[0] = m_x1;
             m_vy[0] = m_y1;
-            m_vx[1] = m_x2; 
+            m_vx[1] = m_x2;
             m_vy[1] = m_y1;
-            m_vx[2] = m_x2; 
+            m_vx[2] = m_x2;
             m_vy[2] = m_y2;
-            m_vx[3] = m_x1; 
+            m_vx[3] = m_x1;
             m_vy[3] = m_y2;
-            m_vx[4] = m_x1 + m_border_width; 
-            m_vy[4] = m_y1 + m_border_width; 
-            m_vx[5] = m_x1 + m_border_width; 
-            m_vy[5] = m_y2 - m_border_width; 
-            m_vx[6] = m_x2 - m_border_width; 
-            m_vy[6] = m_y2 - m_border_width; 
-            m_vx[7] = m_x2 - m_border_width; 
-            m_vy[7] = m_y1 + m_border_width; 
+            m_vx[4] = m_x1 + m_border_width;
+            m_vy[4] = m_y1 + m_border_width;
+            m_vx[5] = m_x1 + m_border_width;
+            m_vy[5] = m_y2 - m_border_width;
+            m_vx[6] = m_x2 - m_border_width;
+            m_vy[6] = m_y2 - m_border_width;
+            m_vx[7] = m_x2 - m_border_width;
+            m_vy[7] = m_y1 + m_border_width;
             m_vx[8] = m_xc1 + m_border_width;
             m_vy[8] = m_yc2 - m_border_width * 0.5;
             m_vx[9] = m_xc2 - m_border_width;
@@ -280,8 +280,8 @@ namespace agg
             break;
 
         case 3:
-            if(m_vertex == 0  || 
-               m_vertex == 4  || 
+            if(m_vertex == 0  ||
+               m_vertex == 4  ||
                m_vertex == 8  ||
                m_vertex == 14) cmd = path_cmd_move_to;
 
@@ -343,7 +343,7 @@ namespace agg
     }
 
 
-    
+
     //------------------------------------------------------------------------
     void gamma_ctrl_impl::change_active_point()
     {
@@ -430,4 +430,3 @@ namespace agg
 
 
 }
-

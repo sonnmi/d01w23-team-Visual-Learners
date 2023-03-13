@@ -127,7 +127,7 @@ LassoSelector
   aliases for ``press`` and ``release``.
 - The ``matplotlib.widgets.TextBox.DIST_FROM_LEFT`` attribute has been
   removed.  It was marked as private in 3.5.
-  
+
 ``backend_template.show``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ... has been removed, in order to better demonstrate the new backend definition
@@ -159,7 +159,7 @@ In particular:
   1) and *coordinates* could be an array-like of any shape with M * N * 2
   elements.
 - All parameters except *coordinates* are keyword-only now.
-  
+
 Expiration of ``FancyBboxPatch`` deprecations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -366,4 +366,3 @@ Miscellaneous removals
 - Passing formatting parameters positionally to ``stem()`` is no longer
   possible.
 - ``axisartist.clip_path`` is removed with no replacement.
-

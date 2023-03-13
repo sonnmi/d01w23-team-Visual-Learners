@@ -35,7 +35,8 @@ from matplotlib import _api, cbook
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 import matplotlib.collections as mcoll
-
+import matplotlib.patches as mpatches
+import matplotlib.legend as mlegend
 
 def update_from_first_child(tgt, src):
     first_child = next(iter(src.get_children()), None)
@@ -811,6 +812,58 @@ class HandlerPolyCollection(HandlerBase):
         # docstring inherited
         p = Rectangle(xy=(-xdescent, -ydescent),
                       width=width, height=height)
+        self.update_prop(p, orig_handle, legend)
+        p.set_transform(trans)
+        return [p]
+
+class HandlerPatchCollection(HandlerPatch):
+    """
+    Handler for `.PatchCollection` instances.
+    """
+    def _default_update_prop(self, legend_handle, orig_handle):
+        if not isinstance(legend_handle, mpatches.Patch):
+            raise TypeError("legend_handle must be a Patch object")
+        if not isinstance(orig_handle, mcoll.PatchCollection):
+            raise TypeError("orig_handle must be a PatchCollection object")
+        
+        def first_color(colors):
+            if colors.size == 0:
+                return (0, 0, 0, 0)
+            return tuple(colors[0])
+
+        def get_first(prop_array):
+            if len(prop_array):
+                return prop_array[0]
+            else:
+                return None
+
+        # orig_handle is a PatchCollection and legend_handle is a Patch.
+        # Directly set Patch color attributes (must be RGBA tuples).
+        legend_handle._facecolor = first_color(orig_handle.get_facecolor())
+        legend_handle._edgecolor = first_color(orig_handle.get_edgecolor())
+        legend_handle._original_facecolor = orig_handle._original_facecolor
+        legend_handle._original_edgecolor = orig_handle._original_edgecolor
+        legend_handle._fill = orig_handle.get_fill()
+        legend_handle._hatch = orig_handle.get_hatch()
+        # Hatch color is anomalous in having no getters and setters.
+        legend_handle._hatch_color = orig_handle._hatch_color
+        # Setters are fine for the remaining attributes.
+        legend_handle.set_linewidth(get_first(orig_handle.get_linewidths()))
+        legend_handle.set_linestyle(get_first(orig_handle.get_linestyles()))
+        legend_handle.set_transform(get_first(orig_handle.get_transforms()))
+        legend_handle.set_figure(orig_handle.get_figure())
+        # Alpha is already taken into account by the color attributes.
+
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize, trans):
+        # docstring inherited
+        if not isinstance(legend, mlegend.Legend):
+            raise TypeError("legend must be a Legend object")
+        if not isinstance(orig_handle, mcoll.PatchCollection):
+            raise TypeError("orig_handle must be a PatchCollection object")
+        
+        p = self._create_patch(legend, orig_handle,
+                               xdescent, ydescent, width, height, fontsize)
         self.update_prop(p, orig_handle, legend)
         p.set_transform(trans)
         return [p]

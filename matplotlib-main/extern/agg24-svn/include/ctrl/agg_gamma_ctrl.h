@@ -2,8 +2,8 @@
 // Anti-Grain Geometry - Version 2.4
 // Copyright (C) 2002-2005 Maxim Shemanarev (http://www.antigrain.com)
 //
-// Permission to copy, use, modify, sell and distribute this software 
-// is granted provided this copyright notice appears in all copies. 
+// Permission to copy, use, modify, sell and distribute this software
+// is granted provided this copyright notice appears in all copies.
 // This software is provided "as is" without express or implied
 // warranty, and with no claim as to its suitability for any purpose.
 //
@@ -32,7 +32,7 @@
 namespace agg
 {
     //------------------------------------------------------------------------
-    // Class that can be used to create an interactive control to set up 
+    // Class that can be used to create an interactive control to set up
     // gamma arrays.
     //------------------------------------------------------------------------
     class gamma_ctrl_impl : public ctrl
@@ -148,7 +148,7 @@ namespace agg
         void inactive_pnt_color(const ColorT& c) { m_inactive_pnt_color = c; }
         void active_pnt_color(const ColorT& c)   { m_active_pnt_color = c; }
         void text_color(const ColorT& c)         { m_text_color = c; }
-        const ColorT& color(unsigned i) const { return *m_colors[i]; } 
+        const ColorT& color(unsigned i) const { return *m_colors[i]; }
 
     private:
         gamma_ctrl(const gamma_ctrl<ColorT>&);

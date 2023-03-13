@@ -235,7 +235,7 @@ Pull Requests (224):
 * :ghpull:`12313`: BUG: Fix typo in view_limits() for MultipleLocator
 * :ghpull:`12307`: Clarify missing-property error message.
 * :ghpull:`12274`: MNT: put back ``_hold`` as read-only attribute on AxesBase
-* :ghpull:`12260`: Fix docs : change from issue #12191, remove "if 1:" blocks in examples 
+* :ghpull:`12260`: Fix docs : change from issue #12191, remove "if 1:" blocks in examples
 * :ghpull:`12163`: TST: Defer loading Qt framework until test is run.
 * :ghpull:`12253`: Handle utf-8 output by kpathsea on Windows.
 * :ghpull:`12301`: Ghostscript 9.0 requirement revisited
@@ -251,7 +251,7 @@ Pull Requests (224):
 * :ghpull:`12254`: Improve docstrings of Animations
 * :ghpull:`12258`: Fix CSS for module-level data
 * :ghpull:`12222`: Remove extraneous if 1 statements in demo_axisline_style.py
-* :ghpull:`12137`:  MAINT: Vectorize bar3d 
+* :ghpull:`12137`:  MAINT: Vectorize bar3d
 * :ghpull:`12219`: Merge OSXInstalledFonts into findSystemFonts.
 * :ghpull:`12229`: Less ACCEPTS, more numpydoc.
 * :ghpull:`12209`: Doc: Sort named colors example by palette
@@ -302,7 +302,7 @@ Issues (170):
 * :ghissue:`12765`: Matplotlib draws incorrect color
 * :ghissue:`11800`: Gridspec tutorial
 * :ghissue:`12757`: up the figure
-* :ghissue:`12724`: Importing pyplot steals focus on macOS 
+* :ghissue:`12724`: Importing pyplot steals focus on macOS
 * :ghissue:`12669`: fixing _hold on cartopy broke basemap
 * :ghissue:`12687`: Plotting text on 3d axes before tight_layout() breaks tight_layout()
 * :ghissue:`12734`: Wishlist: functionally linked twin axes
@@ -338,12 +338,12 @@ Issues (170):
 * :ghissue:`12645`: Markers are offset when 'facecolor' or 'edgecolor' are set to 'none' when plotting data
 * :ghissue:`12644`: Memory leak with plt.plot in Jupyter Notebooks?
 * :ghissue:`12632`: Do we need input hooks macosx?
-* :ghissue:`12535`: AIX Support - Do not undef _XOPEN_SOURCE 
+* :ghissue:`12535`: AIX Support - Do not undef _XOPEN_SOURCE
 * :ghissue:`12626`: AttributeError: module 'matplotlib' has no attribute 'artist'
 * :ghissue:`11034`: Doc Typo:  matplotlib.axes.Axes.get_yticklabels  / Axis.get_ticklabels
 * :ghissue:`12624`: make_axes_locatable : Colorbar in the middle instead of bottom while saving a pdf, png.
 * :ghissue:`11094`: can not use GUI backends inside django request handlers
-* :ghissue:`12613`: transiently linked interactivity of unshared pair of axes generated with make_axes_locatable 
+* :ghissue:`12613`: transiently linked interactivity of unshared pair of axes generated with make_axes_locatable
 * :ghissue:`12578`: macOS builds are broken
 * :ghissue:`12612`: gui backends do not work inside of flask request handlers
 * :ghissue:`12611`: Matplotlib 3.0.0 Likely bug TypeError: stackplot() got multiple values for argument 'x'
@@ -355,7 +355,7 @@ Issues (170):
 * :ghissue:`12580`: Incorrect hist error message with bad color size
 * :ghissue:`12100`: document where to get nightly wheels
 * :ghissue:`7205`: Converting docstrings to numpydoc
-* :ghissue:`12564`: Saving plot as PNG file prunes tick labels 
+* :ghissue:`12564`: Saving plot as PNG file prunes tick labels
 * :ghissue:`12161`: Problems of using sharex options with lines plots and colormesh with colorbar
 * :ghissue:`12256`: tight_layout for plot with non-clipped screen-unit items causes issues on zoom
 * :ghissue:`12545`: Program quit unormally without reporting error
@@ -369,7 +369,7 @@ Issues (170):
 * :ghissue:`12155`: Incorrect placement of Colorbar ticks using LogNorm
 * :ghissue:`11787`: Looping gifs with PillowWriter
 * :ghissue:`12533`: Plotting with alpha=0 with rasterized=True causes ValueError on saving to pdf
-* :ghissue:`12438`: Scatter doesn't accept a list of strings as color spec.  
+* :ghissue:`12438`: Scatter doesn't accept a list of strings as color spec.
 * :ghissue:`12429`: scatter() does not accept gray strings anymore
 * :ghissue:`12499`: run my code failed after i Import pylab failed, python version is 3.6.6
 * :ghissue:`12458`: add_lines misses lines for matplotlib.colorbar.ColorbarBase
@@ -406,7 +406,7 @@ Issues (170):
 * :ghissue:`12279`: Axes.format_cursor_data lacks documentation and seems unused
 * :ghissue:`12428`: Simple plot spacing bug: ylabel gets wrongfully removed from plot
 * :ghissue:`11190`: Images in the docs are too large.
-* :ghissue:`12271`: error with errorbar with datetime64 
+* :ghissue:`12271`: error with errorbar with datetime64
 * :ghissue:`12405`: plt.stackplot() does not work with 3.0.0
 * :ghissue:`12282`: ``Axes.imshow`` tooltip does not get updated when another call to ``Axes.imshow`` is made
 * :ghissue:`12420`: How to remove Rectangle Selector from figure?
