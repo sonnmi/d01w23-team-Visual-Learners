@@ -190,6 +190,7 @@ class FigureBase(Artist):
 
         # groupers to keep track of titles we want to align.
         self._align_title_group = {"title": cbook.Grouper()}
+        self.align_title = False
 
         self.figure = self
         self._localaxes = []  # track all axes
@@ -1499,6 +1500,7 @@ default: %(va)s
         their `.SubplotSpec` positions correspond to figure positions.
 
         """
+        self.align_title = True
         if axs is None:
             axs = self.axes
         axs = [ax for ax in np.ravel(axs) if ax.get_subplotspec() is not None]
