@@ -3939,12 +3939,11 @@ class Axes(_AxesBase):
             capprops = {}
         if medianprops is None:
             medianprops = {}
-        # if not defined then set default to butt
-            medianprops['solid_capstyle'] = 'butt'
-        # if defined but solid_capstyle not 
-        # defined, change type to butt
+        # if length changed but solid_capstyle not 
+        # change cap type to butt
         if medianprops.get('solid_capstyle', None) is None:
-            medianprops['solid_capstyle'] = 'butt'
+            if not medianprops.get('linewidth', None) is None:
+                medianprops['solid_capstyle'] = 'butt'
         if meanprops is None:
             meanprops = {}
         if flierprops is None:
@@ -4140,7 +4139,7 @@ class Axes(_AxesBase):
         if zorder is None:
             zorder = mlines.Line2D.zorder
 
-        zdelta = - 0.1
+        zdelta = 0.1
 
         def merge_kw_rc(subkey, explicit, zdelta=0, usemarker=True):
             d = {k.split('.')[-1]: v for k, v in mpl.rcParams.items()
