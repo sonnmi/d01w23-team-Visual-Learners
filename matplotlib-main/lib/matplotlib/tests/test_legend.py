@@ -126,7 +126,6 @@ def test_legend_auto5():
 
     assert_allclose(leg_bboxes[1].bounds, leg_bboxes[0].bounds)
 
-# deliverable3
 @image_comparison(baseline_images=['test_polycollection_auto_scale'], remove_text=True,
                   extensions=['png'], style='mpl20')
 def test_polycollection_auto_scale():
