@@ -317,6 +317,20 @@ class Axes(_AxesBase):
             raise TypeError('legend only accepts two non-keyword arguments')
         self.legend_ = mlegend.Legend(self, handles, labels, **kwargs)
         self.legend_._remove_method = self._remove_legend
+
+        for collection in self.collections:
+            datalim = collection.get_datalim(self.transData)
+            x = self.get_xlim()
+            x0 = min(x[0], datalim.x0)
+            x1 = max(x[1], datalim.x1)
+            if x0 < x1:
+                self.set_xlim(left=x0, right=x1)
+            y = self.get_ylim()
+            y0 = min(y[0], datalim.y0)
+            y1 = max(y[1], datalim.y1)
+            if y0 < y1:
+                self.set_ylim(bottom=y0, top=y1)
+        
         return self.legend_
 
     def _remove_legend(self, legend):
