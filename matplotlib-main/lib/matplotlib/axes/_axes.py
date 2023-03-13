@@ -318,7 +318,6 @@ class Axes(_AxesBase):
         self.legend_ = mlegend.Legend(self, handles, labels, **kwargs)
         self.legend_._remove_method = self._remove_legend
 
-        # deliverable3
         for collection in self.collections:
             datalim = collection.get_datalim(self.transData)
             x = self.get_xlim()
