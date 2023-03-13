@@ -10,13 +10,13 @@ In order to see everyone's progress we use Jira. For deliverable 3, we are requi
 
 Everyone went through Matplotlib's Issues tab scouring for a good "good first issue" / "difficulty: easy" issue. Once everyone has what they want to do in mind, Hongkang Yu volunteered to work on his own since we were a group of five having to split between three issues. The four of us were then randomly assigned into groups of two. From there, it was a discussion amongst each other for what issue each group will ultimately decide to do. After reading more about the issue, each group listed out subtasks to further divide the work and added their estimations on Jira. The following three screenshots show each issue's subtasks:
 
-#### Issue 22376 (Hongkang Yu)
+#### Issue #22376 (Hongkang Yu)
 ![[j1.png]]
 
-#### Issue 23998 (Yesom Son & Lander Joshua Vitug)
+#### Issue #23998 (Yesom Son & Lander Joshua Vitug)
 ![[j2.png]]
 
-#### Issue 19409 (Chenbo Wang & Yuehai Zhou)
+#### Issue #19409 (Chenbo Wang & Yuehai Zhou)
 ![[j3.png]]
 
 Throughout the development process, we each tracked our tasks by updating the hours we spent for each subtask and adding comments whenever necessary. Here's an example highlighting task tracking and estimating:
