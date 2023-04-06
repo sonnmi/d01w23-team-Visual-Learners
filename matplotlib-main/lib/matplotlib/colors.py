@@ -48,6 +48,8 @@ import io
 import itertools
 from numbers import Real
 import re
+import json
+import os
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 
@@ -55,6 +57,7 @@ import matplotlib as mpl
 import numpy as np
 from matplotlib import _api, _cm, cbook, scale
 from ._color_data import BASE_COLORS, TABLEAU_COLORS, CSS4_COLORS, XKCD_COLORS
+from ._custom_color_data import customized_colors
 
 
 class _ColorMapping(dict):
@@ -83,6 +86,7 @@ _colors_full_map.update({k.replace('gray', 'grey'): v
                          for k, v in TABLEAU_COLORS.items()
                          if 'gray' in k})
 _colors_full_map.update(BASE_COLORS)
+_colors_full_map.update(customized_colors)
 _colors_full_map = _ColorMapping(_colors_full_map)
 
 _REPR_PNG_SIZE = (512, 64)
@@ -91,6 +95,88 @@ _REPR_PNG_SIZE = (512, 64)
 def get_named_colors_mapping():
     """Return the global mapping of names to named colors."""
     return _colors_full_map
+
+
+def get_custom_colors_mapping():
+    """Return the customized global mapping of names to named colors."""
+    return customized_colors
+
+
+class CustomizedColorRegistry:
+    r"""
+    Register for sequences of colors that are known to Matplotlib by name.
+
+    The universal registry instance is `matplotlib._custom_colors`. There
+    should be no need for users to instantiate `.CustomizedColorRegistry`
+    themselves.
+
+    Additional customized color names can be added via
+    `.CustomizedColorRegistry.register`::
+
+        mpl._custom_colors.register('custom_red', '#d62728')
+    """
+
+    data_path = os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data.py"
+
+    def truncate_custom_color_data(self):
+        """
+        Truncate all the data in ._custom_color_data.py
+        """
+        open(self.data_path, "w").close()
+
+    def write_updated_custom_data(self):
+        """
+        Write the updated customized color data to file.
+        """
+        with open(self.data_path, 'w') as file:
+            file.write("customized_colors = ")
+            file.write(json.dumps(customized_colors))
+            file.close()
+
+    def register(self, name, color):
+        """
+        Register a new customized color.
+
+        Parameters
+        ----------
+        name : str
+            The name for the customized color.
+
+        color : color
+            The definition of the color to be registered.
+        """
+        self.truncate_custom_color_data()
+        customized_colors.update({name: color})
+        _colors_full_map.update({name: color})
+        self.write_updated_custom_data()
+
+    def unregister(self, name):
+        """
+        Unregister a new customized color.
+
+        Parameters
+        ----------
+        name : str
+            The name for the customized color to be unregistered.
+        """
+        self.truncate_custom_color_data()
+        customized_colors.pop(name)
+        _colors_full_map.pop(name)
+        self.write_updated_custom_data()
+
+    def unregister_all(self):
+        """
+        Unregister all customized colors.
+        """
+        self.truncate_custom_color_data()
+        names = customized_colors.keys()
+        for name in names:
+            _colors_full_map.pop(name)
+        customized_colors.clear()
+        self.write_updated_custom_data()
+
+
+_custom_colors = CustomizedColorRegistry()
 
 
 class ColorSequenceRegistry(Mapping):
