@@ -31,8 +31,10 @@ xtick.direction: out
 ytick.color: 555555
 ytick.direction: out
 
-grid.color: white
-grid.linestyle: -    # solid line
+grid.major.color: white
+grid.major.linestyle: -    # solid line
+grid.minor.color: white
+grid.minor.linestyle: -    # solid line
 
 figure.facecolor: white
 figure.edgecolor: 0.50

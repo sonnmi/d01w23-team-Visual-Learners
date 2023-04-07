@@ -6,7 +6,8 @@ xtick.labelsize: 8
 ytick.labelsize: 8
 legend.fontsize: 8
 
-grid.linewidth: 0.8
+grid.major.linewidth: 0.8
+grid.minor.linewidth: 0.8
 lines.linewidth: 1.4
 patch.linewidth: 0.24
 lines.markersize: 5.6

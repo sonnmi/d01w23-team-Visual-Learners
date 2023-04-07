@@ -274,10 +274,14 @@ ytick.minor.right    : True   # draw y axis right minor ticks
 ytick.alignment      : center
 
 ### GRIDS
-grid.color       :   k       # grid color
-grid.linestyle   :   :       # dotted
-grid.linewidth   :   0.5     # in points
-grid.alpha       :   1.0     # transparency, between 0.0 and 1.0
+grid.major.color       :   k       # major grid color
+grid.major.linestyle   :   :       # dotted
+grid.major.linewidth   :   0.5     # in points
+grid.major.alpha       :   1.0     # transparency, between 0.0 and 1.0
+grid.minor.color       :   k       # minor grid color
+grid.minor.linestyle   :   :       # dotted
+grid.minor.linewidth   :   0.5     # in points
+grid.minor.alpha       :   1.0     # transparency, between 0.0 and 1.0
 
 ### Legend
 legend.fancybox      : False  # if True, use a rounded box for the
