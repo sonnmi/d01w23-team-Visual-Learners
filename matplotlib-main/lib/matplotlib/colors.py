@@ -106,7 +106,7 @@ class CustomizedColorRegistry:
     r"""
     Register for sequences of colors that are known to Matplotlib by name.
 
-    The universal registry instance is `matplotlib._custom_colors`. There
+    The universal registry instance is `matplotlib._custom_color_registry`. There
     should be no need for users to instantiate `.CustomizedColorRegistry`
     themselves.
 
@@ -118,6 +118,18 @@ class CustomizedColorRegistry:
 
     data_path = os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data.py"
 
+    def __getitem__(self, item):
+        try:
+            return list(self._custom_color_sequences[item])
+        except KeyError:
+            raise KeyError(f"{item!r} is not a known color sequence name")
+
+    def __iter__(self):
+        return iter(self._custom_color_sequences)
+
+    def __len__(self):
+        return len(self._custom_color_sequences)
+    
     def truncate_custom_color_data(self):
         """
         Truncate all the data in ._custom_color_data.py
@@ -176,7 +188,7 @@ class CustomizedColorRegistry:
         self.write_updated_custom_data()
 
 
-_custom_colors = CustomizedColorRegistry()
+_custom_color_sequences = CustomizedColorRegistry()
 
 
 class ColorSequenceRegistry(Mapping):
