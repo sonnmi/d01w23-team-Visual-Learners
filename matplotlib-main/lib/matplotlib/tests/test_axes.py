@@ -9,6 +9,10 @@ from itertools import product
 import platform
 from types import SimpleNamespace
 
+import matplotlib.cm as cm
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.ticker import LinearLocator
+
 import dateutil.tz
 
 import numpy as np
@@ -5346,6 +5350,38 @@ def test_rcparam_grid_minor(grid_which, major_visible, minor_visible):
                for tick in ax.xaxis.majorTicks)
     assert all(tick.gridline.get_visible() == minor_visible
                for tick in ax.xaxis.minorTicks)
+
+@image_comparison(baseline_images=['test_rcparams_3d_grid'],
+                  extensions=['png'])
+def test_rcparams_3d_grid():
+    """rcparam test with a major grid color in the issue #13919"""
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.minor.linestyle'] = ':'
+    mpl.rcParams['grid.major.linestyle'] = '-'
+    mpl.rcParams['grid.minor.linewidth'] = '1'
+    mpl.rcParams['grid.major.linewidth'] = '2.5'
+    mpl.rcParams['grid.minor.color'] = 'green'
+    mpl.rcParams['grid.major.color'] = 'black'
+
+    # Creating a figure and a 3D axis
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    # Creating a meshgrid
+    X = np.arange(-5, 5, 0.25)
+    Y = np.arange(-5, 5, 0.25)
+    X, Y = np.meshgrid(X, Y)
+    R = np.sqrt(X**2 + Y**2)
+    Z = np.sin(R)
+    surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+    ax.zaxis.set_major_locator(LinearLocator(10))
+    ax.xaxis.set_major_locator(LinearLocator(10))
+    ax.xaxis.set_minor_locator(LinearLocator(50))
+    ax.yaxis.set_minor_locator(LinearLocator(50))
+
+    # Adding a color bar
+    fig.colorbar(surf, shrink=0.5, aspect=5)
+    plt.savefig("image.png")
 
 
 def test_grid():
