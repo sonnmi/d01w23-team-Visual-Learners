@@ -133,7 +133,7 @@ class CustomizedColorRegistry:
             file.write(json.dumps(customized_colors))
             file.close()
 
-    def register(self, name, color):
+    def register(self, name, color, override=False):
         """
         Register a new customized color.
 
@@ -144,7 +144,26 @@ class CustomizedColorRegistry:
 
         color : color
             The definition of the color to be registered.
+
+        override : bool
+            If the user defined color already exists whether override it.
         """
+
+        old_names = _colors_full_map.keys()
+        for old_name in old_names:
+            if name == old_name:
+                cust_names = customized_colors.keys()
+                for cust_name in cust_names:
+                    if name == cust_name:
+                        if override is False:
+                            raise Exception("Given user defined name "
+                                            "already exists.")
+                raise Exception("Given name is preserved for"
+                                " built-in named colors.")
+
+        if is_color_like(color) is False:
+            raise Exception("The color definition is invalid.")
+
         self.truncate_custom_color_data()
         customized_colors.update({name: color})
         _colors_full_map.update({name: color})
@@ -159,6 +178,15 @@ class CustomizedColorRegistry:
         name : str
             The name for the customized color to be unregistered.
         """
+        cust_names = customized_colors.keys()
+        is_cust_color = False
+        for cust_name in cust_names:
+            if name == cust_name:
+                is_cust_color = True
+        if is_cust_color is False:
+            raise KeyError("Given color name is not a user "
+                           "defined color name.")
+
         self.truncate_custom_color_data()
         customized_colors.pop(name)
         _colors_full_map.pop(name)
