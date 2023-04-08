@@ -37,6 +37,8 @@ print(mcolors.get_custom_colors_mapping())
 # {'cust_blue': (0, 1, 1), 'cust_orange': '#ff7f0e'}
 plt.show()
 ```
+![user_defined_color_plot](https://user-images.githubusercontent.com/57647309/230742533-e9fc38e4-e7b7-45bf-8d29-441ddc106c30.png)
+
 
 After registering and unregistering, the updated user defined colors are persisted by Matplotlib. Therefore users do not need to maintain a dictionary of color names and colors and import the dictionary every time when they use it.
 
