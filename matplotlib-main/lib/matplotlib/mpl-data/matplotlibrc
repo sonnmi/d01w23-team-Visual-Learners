@@ -515,10 +515,15 @@
 ## ***************************************************************************
 ## * GRIDS                                                                   *
 ## ***************************************************************************
-#grid.color:     "#b0b0b0"  # grid color
-#grid.linestyle: -          # solid
-#grid.linewidth: 0.8        # in points
-#grid.alpha:     1.0        # transparency, between 0.0 and 1.0
+#grid.major.color:     "#b0b0b0"  # grid color
+#grid.major.linestyle: -          # solid
+#grid.major.linewidth: 0.8        # in points
+#grid.major.alpha:     1.0        # transparency, between 0.0 and 1.0
+
+#grid.minor.color:     "#b0b0b0"  # minor grid color
+#grid.minor.linestyle: -          # solid
+#grid.minor.linewidth: 0.8        # in points
+#grid.minor.alpha:     1.0        # transparency, between 0.0 and 1.0
 
 
 ## ***************************************************************************

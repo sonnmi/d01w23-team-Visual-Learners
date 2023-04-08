@@ -127,9 +127,9 @@ class Axis(maxis.XAxis):
                     'color': mpl.rcParams['axes.edgecolor'],
                 },
                 'grid': {
-                    'color': mpl.rcParams['grid.color'],
-                    'linewidth': mpl.rcParams['grid.linewidth'],
-                    'linestyle': mpl.rcParams['grid.linestyle'],
+                    'color': mpl.rcParams['grid.major.color'],
+                    'linewidth': mpl.rcParams['grid.major.linewidth'],
+                    'linestyle': mpl.rcParams['grid.major.linestyle'],
                 },
             })
             self._axinfo['tick'].update({
