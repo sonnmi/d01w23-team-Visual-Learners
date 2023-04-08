@@ -50,6 +50,7 @@ from numbers import Real
 import re
 import json
 import os
+import sys
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 
@@ -115,8 +116,9 @@ class CustomizedColorRegistry:
 
         mpl._custom_colors.register('custom_red', '#d62728')
     """
-
-    data_path = os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data.py"
+    def __init__(self):
+        self.data_path = os.path.dirname(os.path.abspath(__file__)) \
+                             + "/_custom_color_data.py"
     
     def truncate_custom_color_data(self):
         """
@@ -148,16 +150,14 @@ class CustomizedColorRegistry:
         override : bool
             If the user defined color already exists whether override it.
         """
-
         old_names = _colors_full_map.keys()
-        for old_name in old_names:
-            if name == old_name:
-                cust_names = customized_colors.keys()
-                for cust_name in cust_names:
-                    if name == cust_name:
-                        if override is False:
-                            raise Exception("Given user defined name "
-                                            "already exists.")
+        if name in old_names:
+            cust_names = customized_colors.keys()
+            if name in cust_names:
+                if override is False:
+                    raise Exception("Given user defined name "
+                                    "already exists.")
+            else:
                 raise Exception("Given name is preserved for"
                                 " built-in named colors.")
 
@@ -179,11 +179,7 @@ class CustomizedColorRegistry:
             The name for the customized color to be unregistered.
         """
         cust_names = customized_colors.keys()
-        is_cust_color = False
-        for cust_name in cust_names:
-            if name == cust_name:
-                is_cust_color = True
-        if is_cust_color is False:
+        if name not in cust_names:
             raise KeyError("Given color name is not a user "
                            "defined color name.")
 
