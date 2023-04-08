@@ -1597,51 +1597,71 @@ def test_color_sequences():
         plt.color_sequences.unregister('tab10')
 
 
-def test_custom_color_sequences():
+def test_custom_color_register():
+    """
+    Testing register method of CustomizedColorRegistry class
+    """
+
     # basic access
-    assert plt.custom_color_sequences is matplotlib.custom_color_sequences
+    assert plt.custom_colors is matplotlib.custom_colors
+    # register color red
+    plt.custom_colors.register('red', 'r')
 
-    # register
-
-    # define color red
-    plt.custom_color_sequences.register('red', 'r')
     # raise error when input name is predefined
     with pytest.raises(ValueError, match="predefined name"):
-        plt.custom_color_sequences.register('red', 'g')
+        plt.custom_colors.register('red', 'g')
     # raise error when input color is invalid
     with pytest.raises(ValueError, match="not a valid color specification"):
-        plt.custom_color_sequences.register('invalid', 'not a color')
+        plt.custom_colors.register('invalid', 'not a color')
     # registering new color 
-    plt.custom_color_sequences.register('blue', 'b')
-    assert plt.custom_color_sequences['blue'] == 'b'
+    plt.custom_colors.register('blue', 'b')
+    assert plt.custom_colors['blue'] == 'b'
 
-    # override
 
-    # changing predefined color with override method 
-    plt.custom_color_sequences.override('red', 'g')
-    assert plt.custom_color_sequences['red'] == 'g'
-    # raise error when override non-existed color with override method 
-    with pytest.raises(KeyError, match="color name does not exist"):
-        plt.custom_color_sequences.override('green', 'g')
+def test_custom_color_override():
+    """
+    Testing override param of register method of CustomizedColorRegistry class
+    """
+    # register color red
+    plt.custom_colors.register('red', 'r')
 
-    # unregister
+    # changing predefined color with override 
+    plt.custom_colors.register('red', 'b', override=True)
+    assert plt.custom_colors['red'] == 'b'
+    # register when user tries override non-existed color with override 
+    plt.custom_colors.register('green', 'g', override=True)
+    assert plt.custom_colors['green'] == 'g'
+
+
+def test_custom_color_unregister():
+    """
+    Testing unregister method of CustomizedColorRegistry class
+    """
+    
+    # register color red and blue
+    plt.custom_colors.register('red', 'r')
+    plt.custom_colors.register('blue', 'b')
 
     # unregister red and the dict should be left with blue only
-    plt.custom_color_sequences.unregister('red')
-    assert plt.custom_color_sequences == {{'blue': 'b'}}
+    plt.custom_colors.unregister('red')
+    assert plt.custom_colors == {{'blue': 'b'}}
     # raise error when unregister red again
     with pytest.raises(KeyError, match="invalid color name"):
-        plt.custom_color_sequences['red']  # red is gone
-    plt.custom_color_sequences.unregister('red')  # multiple unregisters are ok
+        plt.custom_colors['red']  # red is gone
+    plt.custom_colors.unregister('red')  # multiple unregisters are ok
 
-    # unregister all
 
-    # add color blue 
-    plt.custom_color_sequences.register('green', 'g')
+def test_custom_color_unregister_all():
+    """
+    Testing unregister_all method of CustomizedColorRegistry class
+    """
+    # register color red and blue
+    plt.custom_colors.register('red', 'r')
+    plt.custom_colors.register('blue', 'b')
+
     # unregister all definded colors
-    plt.custom_color_sequences.unregister_all()
-    assert plt.custom_color_sequences == {}
-    
+    plt.custom_colors.unregister_all()
+    assert plt.custom_colors == {}
 
 def test_cm_set_cmap_error():
     sm = cm.ScalarMappable()
