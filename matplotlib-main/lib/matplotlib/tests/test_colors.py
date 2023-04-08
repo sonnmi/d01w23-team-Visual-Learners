@@ -1631,10 +1631,10 @@ def test_custom_color_override():
     # register color red
     plt.custom_colors.register('cust_red', '#d62728')
 
-    # changing predefined color with override 
+    # changing predefined color with override
     plt.custom_colors.register('cust_red', '#2ca02c', override=True)
     assert matplotlib.colors.same_color('cust_red', '#2ca02c')
-    # register when user tries override non-existed color with override 
+    # register when user tries override non-existed color with override
     plt.custom_colors.register('cust_green', (0, 0, 1), override=True)
     assert matplotlib.colors.same_color('cust_green', (0, 0, 1))
 
@@ -1652,9 +1652,10 @@ def test_custom_color_unregister():
 
     # unregister red and the dict should be left with blue only
     plt.custom_colors.unregister('cust_red')
-    assert matplotlib.colors.get_custom_colors_mapping() == {'cust_blue':(0, 0, 1)}
+    assert matplotlib.colors.get_custom_colors_mapping() == {'cust_blue': (0, 0, 1)}
     # raise error when unregister red again
-    with pytest.raises(KeyError, match='Given color name is not a user defined color name.'):
+    with pytest.raises(KeyError, match='Given color name is '
+                                       'not a user defined color name.'):
         plt.custom_colors.unregister('cust_red')  # multiple unregisters are ok
 
 
@@ -1672,6 +1673,7 @@ def test_custom_color_unregister_all():
     # unregister all definded colors
     plt.custom_colors.unregister_all()
     assert matplotlib.colors.get_custom_colors_mapping() == {}
+
 
 def test_cm_set_cmap_error():
     sm = cm.ScalarMappable()

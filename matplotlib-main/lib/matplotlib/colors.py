@@ -50,7 +50,6 @@ from numbers import Real
 import re
 import json
 import os
-import sys
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 
@@ -119,7 +118,7 @@ class CustomizedColorRegistry:
     def __init__(self):
         self.data_path = os.path.dirname(os.path.abspath(__file__)) \
                              + "/_custom_color_data.py"
-    
+
     def truncate_custom_color_data(self):
         """
         Truncate all the data in ._custom_color_data.py
