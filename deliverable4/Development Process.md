@@ -14,13 +14,13 @@ Everyone went through Matplotlib's Issues tab scouring for a good new feature / 
 
 Here are Jira screenshots.
 
-![j1.png](./j1.png)
+![j1.png](./img/j1.png)
 
-![j2.png](./j2.png)
+![j2.png](./img/j2.png)
 
-![j3.png](./j3.png)
+![j3.png](./img/j3.png)
 
-![j4.png](./j4.png)
+![j4.png](./img/j4.png)
 
 ## Communication Process
 
