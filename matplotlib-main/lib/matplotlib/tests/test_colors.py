@@ -3,6 +3,7 @@ import itertools
 import unittest.mock
 
 from io import BytesIO
+import os
 import numpy as np
 from PIL import Image
 import pytest
@@ -1595,6 +1596,83 @@ def test_color_sequences():
     plt.color_sequences.unregister('rgb')  # multiple unregisters are ok
     with pytest.raises(ValueError, match="Cannot unregister builtin"):
         plt.color_sequences.unregister('tab10')
+
+
+def test_custom_color_register():
+    """
+    Testing register method of CustomizedColorRegistry class
+    """
+    # basic access
+    assert plt.custom_colors is matplotlib.colors._custom_colors
+    matplotlib.colors._custom_colors.data_path = \
+        os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data_pytest.py"
+    matplotlib.colors._custom_colors.unregister_all()
+    # register color red
+    plt.custom_colors.register('cust_red', '#d62728')
+
+    # raise error when input name is predefined
+    with pytest.raises(Exception, match="Given user defined name already exists."):
+        plt.custom_colors.register('cust_red', '#d62728')
+    # raise error when input color is invalid
+    with pytest.raises(Exception, match="The color definition is invalid."):
+        plt.custom_colors.register('invalid', 'not a color')
+    # registering new color
+    plt.custom_colors.register('cust_blue', '#1f77b4')
+    assert matplotlib.colors.same_color('cust_blue', '#1f77b4')
+
+
+def test_custom_color_override():
+    """
+    Testing override param of register method of CustomizedColorRegistry class
+    """
+    matplotlib.colors._custom_colors.data_path = \
+        os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data_pytest.py"
+    matplotlib.colors._custom_colors.unregister_all()
+    # register color red
+    plt.custom_colors.register('cust_red', '#d62728')
+
+    # changing predefined color with override
+    plt.custom_colors.register('cust_red', '#2ca02c', override=True)
+    assert matplotlib.colors.same_color('cust_red', '#2ca02c')
+    # register when user tries override non-existed color with override
+    plt.custom_colors.register('cust_green', (0, 0, 1), override=True)
+    assert matplotlib.colors.same_color('cust_green', (0, 0, 1))
+
+
+def test_custom_color_unregister():
+    """
+    Testing unregister method of CustomizedColorRegistry class
+    """
+    matplotlib.colors._custom_colors.data_path = \
+        os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data_pytest.py"
+    matplotlib.colors._custom_colors.unregister_all()
+    # register color red and blue
+    plt.custom_colors.register('cust_red', '#2ca02c')
+    plt.custom_colors.register('cust_blue', (0, 0, 1))
+
+    # unregister red and the dict should be left with blue only
+    plt.custom_colors.unregister('cust_red')
+    assert matplotlib.colors.get_custom_colors_mapping() == {'cust_blue': (0, 0, 1)}
+    # raise error when unregister red again
+    with pytest.raises(KeyError, match='Given color name is '
+                                       'not a user defined color name.'):
+        plt.custom_colors.unregister('cust_red')  # multiple unregisters are ok
+
+
+def test_custom_color_unregister_all():
+    """
+    Testing unregister_all method of CustomizedColorRegistry class
+    """
+    matplotlib.colors._custom_colors.data_path = \
+        os.path.dirname(os.path.abspath(__file__)) + "/_custom_color_data_pytest.py"
+    matplotlib.colors._custom_colors.unregister_all()
+    # register color red and blue
+    plt.custom_colors.register('cust_red', (1, 0, 0), override=True)
+    plt.custom_colors.register('cust_blue', (0, 0, 1), override=True)
+
+    # unregister all definded colors
+    plt.custom_colors.unregister_all()
+    assert matplotlib.colors.get_custom_colors_mapping() == {}
 
 
 def test_cm_set_cmap_error():

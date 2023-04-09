@@ -70,6 +70,7 @@ from matplotlib.scale import get_scale_names
 from matplotlib import cm
 from matplotlib.cm import _colormaps as colormaps, register_cmap
 from matplotlib.colors import _color_sequences as color_sequences
+from matplotlib.colors import _custom_colors as custom_colors
 
 import numpy as np
 
