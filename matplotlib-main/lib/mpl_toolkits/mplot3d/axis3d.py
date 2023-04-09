@@ -137,16 +137,16 @@ class Axis(maxis.XAxis):
                 },
                 'grid': {
                     'color': {
-                        'major': mpl.rcParams['grid.major.color'],  # major
-                        'minor': mpl.rcParams['grid.minor.color'],  # minor
+                        'major': mpl.rcParams['grid.major.color'],
+                        'minor': mpl.rcParams['grid.minor.color'],
                     },
                     'linewidth': {
-                        'major': mpl.rcParams['grid.major.linewidth'],  # major
-                        'minor': mpl.rcParams['grid.minor.linewidth'],  # minor
+                        'major': mpl.rcParams['grid.major.linewidth'],
+                        'minor': mpl.rcParams['grid.minor.linewidth'],
                     },
                     'linestyle': {
-                        'major': mpl.rcParams['grid.major.linestyle'],  # major
-                        'minor': mpl.rcParams['grid.minor.linestyle'],  # minor
+                        'major': mpl.rcParams['grid.major.linestyle'],
+                        'minor': mpl.rcParams['grid.minor.linestyle'],
                     }
                 }
             })
@@ -528,14 +528,6 @@ class Axis(maxis.XAxis):
                     linewidths.append(gridinfo['linewidth']['minor'])
                     linestyles.append(gridinfo['linestyle']['minor'])
             self.gridlines.set_segments(lines)
-            # self.gridlines.set_segments(major_gridlines)
-            # self.gridlines.set_segments(minor_gridlines)
-
-
-            if type(self) is XAxis:
-                print(self.get_minor_locator() == self.get_major_locator())
-                
-
 
             self.gridlines.set_color(colors)
             self.gridlines.set_linestyle(linestyles)
