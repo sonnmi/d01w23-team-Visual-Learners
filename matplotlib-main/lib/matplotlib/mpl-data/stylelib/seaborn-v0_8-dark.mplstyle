@@ -15,7 +15,8 @@ axes.axisbelow: True
 image.cmap: Greys
 font.family: sans-serif
 font.sans-serif: Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
-grid.linestyle: -
+grid.major.linestyle: -
+grid.minor.linestyle: -
 lines.solid_capstyle: round
 
 # Seaborn dark parameters
@@ -23,7 +24,8 @@ axes.grid: False
 axes.facecolor: EAEAF2
 axes.edgecolor: white
 axes.linewidth: 0
-grid.color: white
+grid.major.color: white
+grid.minor.color: white
 xtick.major.size: 0
 ytick.major.size: 0
 xtick.minor.size: 0

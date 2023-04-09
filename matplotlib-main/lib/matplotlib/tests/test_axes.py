@@ -9,6 +9,10 @@ from itertools import product
 import platform
 from types import SimpleNamespace
 
+import matplotlib.cm as cm
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.ticker import LinearLocator
+
 import dateutil.tz
 
 import numpy as np
@@ -5347,6 +5351,38 @@ def test_rcparam_grid_minor(grid_which, major_visible, minor_visible):
     assert all(tick.gridline.get_visible() == minor_visible
                for tick in ax.xaxis.minorTicks)
 
+@image_comparison(baseline_images=['test_rcparams_3d_grid'],
+                  extensions=['png'])
+def test_rcparams_3d_grid():
+    """rcparam test with a major grid color in the issue #13919"""
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.minor.linestyle'] = ':'
+    mpl.rcParams['grid.major.linestyle'] = '-'
+    mpl.rcParams['grid.minor.linewidth'] = '1'
+    mpl.rcParams['grid.major.linewidth'] = '2.5'
+    mpl.rcParams['grid.minor.color'] = 'green'
+    mpl.rcParams['grid.major.color'] = 'black'
+
+    # Creating a figure and a 3D axis
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    # Creating a meshgrid
+    X = np.arange(-5, 5, 0.25)
+    Y = np.arange(-5, 5, 0.25)
+    X, Y = np.meshgrid(X, Y)
+    R = np.sqrt(X**2 + Y**2)
+    Z = np.sin(R)
+    surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+    ax.zaxis.set_major_locator(LinearLocator(10))
+    ax.xaxis.set_major_locator(LinearLocator(10))
+    ax.xaxis.set_minor_locator(LinearLocator(50))
+    ax.yaxis.set_minor_locator(LinearLocator(50))
+
+    # Adding a color bar
+    fig.colorbar(surf, shrink=0.5, aspect=5)
+    plt.savefig("image.png")
+
 
 def test_grid():
     fig, ax = plt.subplots()
@@ -8476,3 +8512,225 @@ def test_rc_axes_label_formatting():
     assert ax.xaxis.label.get_color() == 'red'
     assert ax.xaxis.label.get_fontsize() == 20
     assert ax.xaxis.label.get_fontweight() == 'bold'
+
+def test_rc_grid_major_color():
+    """rcparam test with a major grid color in the issue #13919"""
+    mpl.rcParams['grid.major.color'] = 'blue'
+
+    ax = plt.gca()
+    ax.grid(True, which='major')
+
+    xgridline_major = ax.xaxis.get_major_ticks()[0].gridline
+    ygridline_major = ax.yaxis.get_major_ticks()[0].gridline
+
+    assert xgridline_major.get_color() == 'blue'
+    assert ygridline_major.get_color() == 'blue'
+
+def test_rc_grid_major_linewidth():
+    """rcparam test with a major grid linewidth in the issue #13919"""
+    mpl.rcParams['grid.major.linewidth'] = 1.5
+
+    ax = plt.gca()
+    ax.grid(True, which='major')
+
+    xgridline_major = ax.xaxis.get_major_ticks()[0].gridline
+    ygridline_major = ax.yaxis.get_major_ticks()[0].gridline
+
+    assert xgridline_major.get_linewidth() == 1.5
+    assert ygridline_major.get_linewidth() == 1.5
+
+def test_rc_grid_major_linestyle():
+    """rcparam test with a major grid linestyle in the issue #13919"""
+    mpl.rcParams['grid.major.linestyle'] = ':'
+
+    ax = plt.gca()
+    ax.grid(True, which='major')
+
+    xgridline_major = ax.xaxis.get_major_ticks()[0].gridline
+    ygridline_major = ax.yaxis.get_major_ticks()[0].gridline
+
+    assert xgridline_major.get_linestyle() == ':'
+    assert ygridline_major.get_linestyle() == ':'
+
+def test_rc_grid_major_alpha():
+    """rcparam test with a major grid alpha in the issue #13919"""
+    mpl.rcParams['grid.major.alpha'] = 0.8
+
+    ax = plt.gca()
+    ax.grid(True, which='major')
+
+    xgridline_major = ax.xaxis.get_major_ticks()[0].gridline
+    ygridline_major = ax.yaxis.get_major_ticks()[0].gridline
+
+    assert xgridline_major.get_alpha() == 0.8
+    assert ygridline_major.get_alpha() == 0.8
+
+def test_rc_grid_minor_color():
+    """rcparam test with a minor grid color in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+    mpl.rcParams['grid.minor.color'] = 'pink'
+    
+    ax = plt.gca()
+    ax.grid(True, which='minor')
+
+    xgridline_minor = ax.xaxis.get_minor_ticks()[0].gridline
+    ygridline_minor = ax.yaxis.get_minor_ticks()[0].gridline
+
+    assert xgridline_minor.get_color() == 'pink'
+    assert ygridline_minor.get_color() == 'pink'
+
+def test_rc_grid_minor_linewidth():
+    """rcparam test with a minor grid linewidth in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+    mpl.rcParams['grid.minor.linewidth'] = 0.8
+    
+    ax = plt.gca()
+    ax.grid(True, which='minor')
+
+    xgridline_minor = ax.xaxis.get_minor_ticks()[0].gridline
+    ygridline_minor = ax.yaxis.get_minor_ticks()[0].gridline
+
+    assert xgridline_minor.get_linewidth() == 0.8
+    assert ygridline_minor.get_linewidth() == 0.8
+
+def test_rc_grid_minor_linestyle():
+    """rcparam test with a minor grid linestyle in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+    mpl.rcParams['grid.minor.linestyle'] = '-'
+    
+    ax = plt.gca()
+    ax.grid(True, which='minor')
+
+    xgridline_minor = ax.xaxis.get_minor_ticks()[0].gridline
+    ygridline_minor = ax.yaxis.get_minor_ticks()[0].gridline
+
+    assert xgridline_minor.get_linestyle() == '-'
+    assert ygridline_minor.get_linestyle() == '-'
+
+def test_rc_grid_minor_alpha():
+    """rcparam test with a minor grid alpha in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+    mpl.rcParams['grid.minor.alpha'] = 0.5
+    
+    ax = plt.gca()
+    ax.grid(True, which='minor')
+
+    xgridline_minor = ax.xaxis.get_minor_ticks()[0].gridline
+    ygridline_minor = ax.yaxis.get_minor_ticks()[0].gridline
+
+    assert xgridline_minor.get_alpha() == 0.5
+    assert ygridline_minor.get_alpha() == 0.5
+
+def test_rc_grid_major_minor():
+    """rcparam test with a major and minor grid for all new rcParams in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+
+    mpl.rcParams['grid.major.color'] = 'blue'
+    mpl.rcParams['grid.major.linewidth'] = 1.5
+    mpl.rcParams['grid.major.linestyle'] = ':'
+    mpl.rcParams['grid.major.alpha'] = 0.8
+
+    mpl.rcParams['grid.minor.color'] = 'pink'
+    mpl.rcParams['grid.minor.linewidth'] = 0.8
+    mpl.rcParams['grid.minor.linestyle'] = '-'
+    mpl.rcParams['grid.minor.alpha'] = 0.5
+
+    ax = plt.gca()
+    ax.grid(True, which='both')
+
+    xgridline_major = ax.xaxis.get_major_ticks()[0].gridline
+    xgridline_minor = ax.xaxis.get_minor_ticks()[0].gridline
+
+    ygridline_major = ax.yaxis.get_major_ticks()[0].gridline
+    ygridline_minor = ax.yaxis.get_minor_ticks()[0].gridline
+
+    assert xgridline_major.get_color() == 'blue'
+    assert xgridline_major.get_linewidth() == 1.5
+    assert xgridline_major.get_linestyle() == ':'
+    assert xgridline_major.get_alpha() == 0.8
+
+    assert ygridline_major.get_color() == 'blue'
+    assert ygridline_major.get_linewidth() == 1.5
+    assert ygridline_major.get_linestyle() == ':'
+    assert ygridline_major.get_alpha() == 0.8
+
+    assert xgridline_minor.get_color() == 'pink'
+    assert xgridline_minor.get_linewidth() == 0.8
+    assert xgridline_minor.get_linestyle() == '-'
+    assert xgridline_minor.get_alpha() == 0.5
+
+    assert ygridline_minor.get_color() == 'pink'
+    assert ygridline_minor.get_linewidth() == 0.8
+    assert ygridline_minor.get_linestyle() == '-'
+    assert ygridline_minor.get_alpha() == 0.5
+
+def test_rc_grid_major_minor_override():
+    """rcparam test with a major and minor grid that is overridden in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+
+    mpl.rcParams['grid.major.color'] = 'blue'
+    mpl.rcParams['grid.major.linewidth'] = 1.5
+    mpl.rcParams['grid.major.linestyle'] = ':'
+    mpl.rcParams['grid.major.alpha'] = 0.8
+
+    mpl.rcParams['grid.minor.color'] = 'pink'
+    mpl.rcParams['grid.minor.linewidth'] = 0.8
+    mpl.rcParams['grid.minor.linestyle'] = '-'
+    mpl.rcParams['grid.minor.alpha'] = 0.5
+
+    ax = plt.gca()
+    ax.grid(True, which='both', color='green', linewidth=2, linestyle='--', alpha=1)
+
+    xgridline_major = ax.xaxis.get_major_ticks()[0].gridline
+    xgridline_minor = ax.xaxis.get_minor_ticks()[0].gridline
+
+    ygridline_major = ax.yaxis.get_major_ticks()[0].gridline
+    ygridline_minor = ax.yaxis.get_minor_ticks()[0].gridline
+
+    assert xgridline_major.get_color() == 'green'
+    assert xgridline_major.get_linewidth() == 2
+    assert xgridline_major.get_linestyle() == '--'
+    assert xgridline_major.get_alpha() == 1
+
+    assert ygridline_major.get_color() == 'green'
+    assert ygridline_major.get_linewidth() == 2
+    assert ygridline_major.get_linestyle() == '--'
+    assert ygridline_major.get_alpha() == 1
+
+    assert xgridline_minor.get_color() == 'green'
+    assert xgridline_minor.get_linewidth() == 2
+    assert xgridline_minor.get_linestyle() == '--'
+    assert xgridline_minor.get_alpha() == 1
+
+    assert ygridline_minor.get_color() == 'green'
+    assert ygridline_minor.get_linewidth() == 2
+    assert ygridline_minor.get_linestyle() == '--'
+    assert ygridline_minor.get_alpha() == 1
+
+def test_rc_grid_major_minor_invalid():
+    """rcparam test with a major and minor grid with invalid rcparam values in the issue #13919"""
+    mpl.rcParams['xtick.minor.visible'] = True
+    mpl.rcParams['ytick.minor.visible'] = True
+
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.color'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.color'] = 'ppink'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.linewidth'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.linewidth'] = 'ppink'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.linestyle'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.linestyle'] = 'ppink'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.alpha'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.alpha'] = 'ppink'

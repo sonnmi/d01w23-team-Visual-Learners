@@ -70,6 +70,7 @@ from matplotlib.scale import get_scale_names
 from matplotlib import cm
 from matplotlib.cm import _colormaps as colormaps, register_cmap
 from matplotlib.colors import _color_sequences as color_sequences
+from matplotlib.colors import _custom_colors as custom_colors
 
 import numpy as np
 
@@ -672,7 +673,8 @@ def xkcd(scale=1, length=100, randomness=2):
         'axes.linewidth': 1.5,
         'lines.linewidth': 2.0,
         'figure.facecolor': 'white',
-        'grid.linewidth': 0.0,
+        'grid.major.linewidth': 0.0,
+        'grid.minor.linewidth': 0.0,
         'axes.grid': False,
         'axes.unicode_minus': False,
         'axes.edgecolor': 'black',

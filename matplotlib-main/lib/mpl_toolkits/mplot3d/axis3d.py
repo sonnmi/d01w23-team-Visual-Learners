@@ -109,9 +109,18 @@ class Axis(maxis.XAxis):
             self._axinfo.update({
                 'axisline': {'linewidth': 0.75, 'color': (0, 0, 0, 1)},
                 'grid': {
-                    'color': (0.9, 0.9, 0.9, 1),
-                    'linewidth': 1.0,
-                    'linestyle': '-',
+                    'color': {
+                        'major': (0.9, 0.9, 0.9, 1),
+                        'minor': (0.9, 0.9, 0.9, 1)
+                    },
+                    'linewidth': {
+                        'major': 1.0,
+                        'minor': 1.0
+                    },
+                    'linestyle': {
+                        'major': '-',
+                        'minor': '-'
+                    }
                 },
             })
             self._axinfo['tick'].update({
@@ -127,10 +136,19 @@ class Axis(maxis.XAxis):
                     'color': mpl.rcParams['axes.edgecolor'],
                 },
                 'grid': {
-                    'color': mpl.rcParams['grid.color'],
-                    'linewidth': mpl.rcParams['grid.linewidth'],
-                    'linestyle': mpl.rcParams['grid.linestyle'],
-                },
+                    'color': {
+                        'major': mpl.rcParams['grid.major.color'],
+                        'minor': mpl.rcParams['grid.minor.color'],
+                    },
+                    'linewidth': {
+                        'major': mpl.rcParams['grid.major.linewidth'],
+                        'minor': mpl.rcParams['grid.minor.linewidth'],
+                    },
+                    'linestyle': {
+                        'major': mpl.rcParams['grid.major.linestyle'],
+                        'minor': mpl.rcParams['grid.minor.linestyle'],
+                    }
+                }
             })
             self._axinfo['tick'].update({
                 'linewidth': {
@@ -484,9 +502,36 @@ class Axis(maxis.XAxis):
             lines[:, 2, index - 1] = maxmin[index - 1]
             self.gridlines.set_segments(lines)
             gridinfo = info['grid']
-            self.gridlines.set_color(gridinfo['color'])
-            self.gridlines.set_linewidth(gridinfo['linewidth'])
-            self.gridlines.set_linestyle(gridinfo['linestyle'])
+            
+            n_minor_gridlines = len(self.get_minor_locator().tick_values(0, len(lines) - 1))
+            n_major_gridlines = len(ticks)
+            if n_major_gridlines > 0:
+                n_major_gridlines = len(ticks) - n_minor_gridlines
+            major_gridlines = []
+            minor_gridlines = []
+            colors = []
+            linewidths = []
+            linestyles = []
+            j_cnt = 0
+            iteration = len(lines) // n_major_gridlines
+            for i in range(len(lines)):
+                if j_cnt == iteration:
+                    j_cnt = 0
+                    major_gridlines.append(lines[i])
+                    colors.append(gridinfo['color']['major'])
+                    linewidths.append(gridinfo['linewidth']['major'])
+                    linestyles.append(gridinfo['linestyle']['major'])
+                else:
+                    j_cnt += 1
+                    minor_gridlines.append(lines[i])
+                    colors.append(gridinfo['color']['minor'])
+                    linewidths.append(gridinfo['linewidth']['minor'])
+                    linestyles.append(gridinfo['linestyle']['minor'])
+            self.gridlines.set_segments(lines)
+
+            self.gridlines.set_color(colors)
+            self.gridlines.set_linestyle(linestyles)
+            self.gridlines.set_linewidth(linewidths)
             self.gridlines.do_3d_projection()
             self.gridlines.draw(renderer)
 

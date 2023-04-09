@@ -17,7 +17,8 @@ axes.prop_cycle: cycler('color', ['0.00', '0.40', '0.60', '0.70'])
 xtick.color: black
 ytick.color: black
 
-grid.color: black
+grid.major.color: black
+grid.minor.color: black
 
 figure.facecolor: 0.75
 figure.edgecolor: white
