@@ -41,9 +41,12 @@ axes.prop_cycle    : cycler('color', ['268BD2', '2AA198', '859900', 'B58900', 'C
 # Magenta
 # Violet
 axes.grid           : True
-grid.color          : fdf6e3    # grid color
-grid.linestyle      : -         # line
-grid.linewidth      : 1         # in points
+grid.major.color          : fdf6e3    # major grid color
+grid.major.linestyle      : -         # line
+grid.major.linewidth      : 1         # in points
+grid.minor.color          : fdf6e3    # minor grid color
+grid.minor.linestyle      : -         # line
+grid.minor.linewidth      : 1         # in points
 
 ### TICKS
 xtick.color         : 657b83

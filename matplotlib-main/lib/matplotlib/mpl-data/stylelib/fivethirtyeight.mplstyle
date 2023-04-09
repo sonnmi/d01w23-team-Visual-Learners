@@ -20,9 +20,12 @@ patch.linewidth: 0.5
 
 svg.fonttype: path
 
-grid.linestyle: -
-grid.linewidth: 1.0
-grid.color: cbcbcb
+grid.major.linestyle: -
+grid.major.linewidth: 1.0
+grid.major.color: cbcbcb
+grid.minor.linestyle: -
+grid.minor.linewidth: 1.0
+grid.minor.color: cbcbcb
 
 xtick.major.size: 0
 xtick.minor.size: 0

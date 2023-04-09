@@ -333,9 +333,9 @@ class GridHelperBase:
 
         """
         gridlines = GridlinesCollection(
-            None, transform=ax.transData, colors=mpl.rcParams['grid.color'],
-            linestyles=mpl.rcParams['grid.linestyle'],
-            linewidths=mpl.rcParams['grid.linewidth'])
+            None, transform=ax.transData, colors=mpl.rcParams['grid.major.color'],
+            linestyles=mpl.rcParams['grid.major.linestyle'],
+            linewidths=mpl.rcParams['grid.major.linewidth'])
         ax._set_artist_props(gridlines)
         gridlines.set_grid_helper(self)
 
@@ -476,9 +476,9 @@ class Axes(maxes.Axes):
         # Init gridlines before clear() as clear() calls grid().
         self.gridlines = gridlines = GridlinesCollection(
             None, transform=self.transData,
-            colors=mpl.rcParams['grid.color'],
-            linestyles=mpl.rcParams['grid.linestyle'],
-            linewidths=mpl.rcParams['grid.linewidth'])
+            colors=mpl.rcParams['grid.major.color'],
+            linestyles=mpl.rcParams['grid.major.linestyle'],
+            linewidths=mpl.rcParams['grid.major.linewidth'])
         self._set_artist_props(gridlines)
         gridlines.set_grid_helper(self.get_grid_helper())
 

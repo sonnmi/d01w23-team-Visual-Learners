@@ -139,18 +139,31 @@ class Tick(martist.Artist):
         self._zorder = zorder
 
         if grid_color is None:
-            grid_color = mpl.rcParams["grid.color"]
+            if major:
+                grid_color = mpl.rcParams["grid.major.color"]
+            else:
+                grid_color = mpl.rcParams["grid.minor.color"]
+            
         if grid_linestyle is None:
-            grid_linestyle = mpl.rcParams["grid.linestyle"]
+            if major:
+                grid_linestyle = mpl.rcParams["grid.major.linestyle"]
+            else:
+                grid_linestyle = mpl.rcParams["grid.minor.linestyle"]
         if grid_linewidth is None:
-            grid_linewidth = mpl.rcParams["grid.linewidth"]
+            if major:
+                grid_linewidth = mpl.rcParams["grid.major.linewidth"]
+            else:
+                grid_linewidth = mpl.rcParams["grid.minor.linewidth"]
         if grid_alpha is None and not mcolors._has_alpha_channel(grid_color):
             # alpha precedence: kwarg > color alpha > rcParams['grid.alpha']
             # Note: only resolve to rcParams if the color does not have alpha
             # otherwise `grid(color=(1, 1, 1, 0.5))` would work like
             #   grid(color=(1, 1, 1, 0.5), alpha=rcParams['grid.alpha'])
             # so the that the rcParams default would override color alpha.
-            grid_alpha = mpl.rcParams["grid.alpha"]
+            if major:
+                grid_alpha = mpl.rcParams["grid.major.alpha"]
+            else:
+                grid_alpha = mpl.rcParams["grid.minor.alpha"]
         grid_kw = {k[5:]: v for k, v in kwargs.items()}
 
         self.tick1line = mlines.Line2D(
@@ -2746,3 +2759,4 @@ class YAxis(Axis):
             return int(np.floor(length / size))
         else:
             return 2**31 - 1
+        
