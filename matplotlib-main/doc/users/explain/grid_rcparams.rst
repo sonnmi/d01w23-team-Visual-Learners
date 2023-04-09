@@ -1,4 +1,3 @@
-.. _
 .. redirect-from:: /users/grid_rcparams
 .. currentmodule:: matplotlib
 
