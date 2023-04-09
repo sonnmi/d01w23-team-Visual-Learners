@@ -43,3 +43,7 @@ plt.show()
 After registering and unregistering, the updated user defined colors are persisted by Matplotlib. Therefore users do not need to maintain a dictionary of color names and colors and import the dictionary every time when they use it.
 
 For `pyplot.custom_colors.register`, error will be raised if the *name* passed in is reserved for built-in color names, *name* already exists and *override* is not set to True, or *color* is an invalid color definition. For `pyplot.custom_colors.unregister`, error will be raised if *name* is not in customized color names.
+
+## User Guide in the style of Matplotlib
+![matplotlib-main/doc/users/explain/userdefined_colors.rst](./img/color_userguide1.png)
+![matplotlib-main/doc/users/explain/userdefined_colors.rst](./img/color_userguide2.png)
