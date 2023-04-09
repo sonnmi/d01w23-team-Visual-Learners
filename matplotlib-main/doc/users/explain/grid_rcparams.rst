@@ -1,4 +1,3 @@
-.. _
 .. redirect-from:: /users/grid_rcparams
 .. currentmodule:: matplotlib
 
@@ -58,4 +57,25 @@ Or, you can set the grid rcParams in your code, here is an example: ::
 
     plt.plot([1,2,3,4,5])
     plt.grid(True)
+    plt.show()
+
+These grid rcParams can even apply to the grid lines in mpl_toolkit.mplot3d. Whether you set the values in your matplotlibrc file or in your code, the grid lines will be set to the values you specified for all axes. Here is an example: ::
+        
+    import matplotlib.pyplot as plt
+    import matplotlib as mpl
+    from mpl_toolkits.mplot3d import Axes3D
+
+    mpl.rcParams['_internal.classic_mode'] = False
+
+    mpl.rcParams['grid.major.color'] = 'b'
+    mpl.rcParams['grid.major.linestyle'] = '-'
+    mpl.rcParams['grid.major.linewidth'] = 0.8
+
+    mpl.rcParams['grid.minor.color'] = 'b'
+    mpl.rcParams['grid.minor.linestyle'] = '--'
+    mpl.rcParams['grid.minor.linewidth'] = 0.8
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection='3d')
+    ax.plot([1,2,3,4,5], [1,2,3,4,5], [1,2,3,4,5])
     plt.show()
