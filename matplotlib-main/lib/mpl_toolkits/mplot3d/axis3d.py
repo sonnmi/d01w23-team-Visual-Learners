@@ -500,7 +500,6 @@ class Axis(maxis.XAxis):
             lines = np.stack([xyz0, xyz0, xyz0], axis=1)
             lines[:, 0, index - 2] = maxmin[index - 2]
             lines[:, 2, index - 1] = maxmin[index - 1]
-            self.gridlines.set_segments(lines)
             gridinfo = info['grid']
             
             n_minor_gridlines = len(self.get_minor_locator().tick_values(0, len(lines) - 1))
