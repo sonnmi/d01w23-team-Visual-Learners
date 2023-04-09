@@ -2173,3 +2173,256 @@ def test_mutating_input_arrays_y_and_z(fig_test, fig_ref):
     y = [0.0, 0.0, 0.0]
     z = [0.0, 0.0, 0.0]
     ax2.plot(x, y, z, 'o-')
+
+def test_rc_3dgrid_major_color():
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.major.color'] = 'green'
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_color = ax.xaxis._axinfo['grid']['color']['major']
+    yaxis_color = ax.yaxis._axinfo['grid']['color']['major']
+    zaxis_color = ax.zaxis._axinfo['grid']['color']['major']
+
+    assert xaxis_color == 'green'
+    assert yaxis_color == 'green'
+    assert zaxis_color == 'green'
+
+def test_rc_3dgrid_major_linewidth():
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.major.linewidth'] = 1.5
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_linewidth = ax.xaxis._axinfo['grid']['linewidth']['major']
+    yaxis_linewidth = ax.yaxis._axinfo['grid']['linewidth']['major']
+    zaxis_linewidth = ax.zaxis._axinfo['grid']['linewidth']['major']
+
+    assert xaxis_linewidth == 1.5
+    assert yaxis_linewidth == 1.5
+    assert zaxis_linewidth == 1.5
+
+def test_rc_3dgrid_major_linestyle():
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.major.linestyle'] = '--'
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_linestyle = ax.xaxis._axinfo['grid']['linestyle']['major']
+    yaxis_linestyle = ax.yaxis._axinfo['grid']['linestyle']['major']
+    zaxis_linestyle = ax.zaxis._axinfo['grid']['linestyle']['major']
+
+    assert xaxis_linestyle == '--'
+    assert yaxis_linestyle == '--'
+    assert zaxis_linestyle == '--'
+
+def test_rc_3dgrid_minor_color():
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.minor.color'] = 'green'
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_color = ax.xaxis._axinfo['grid']['color']['minor']
+    yaxis_color = ax.yaxis._axinfo['grid']['color']['minor']
+    zaxis_color = ax.zaxis._axinfo['grid']['color']['minor']
+
+    assert xaxis_color == 'green'
+    assert yaxis_color == 'green'
+    assert zaxis_color == 'green'
+
+def test_rc_3dgrid_minor_linewidth():
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.minor.linewidth'] = 1.5
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_linewidth = ax.xaxis._axinfo['grid']['linewidth']['minor']
+    yaxis_linewidth = ax.yaxis._axinfo['grid']['linewidth']['minor']
+    zaxis_linewidth = ax.zaxis._axinfo['grid']['linewidth']['minor']
+
+    assert xaxis_linewidth == 1.5
+    assert yaxis_linewidth == 1.5
+    assert zaxis_linewidth == 1.5
+
+def test_rc_3dgrid_minor_linestyle():
+    mpl.rcParams['_internal.classic_mode'] = False
+    mpl.rcParams['grid.minor.linestyle'] = '--'
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_linestyle = ax.xaxis._axinfo['grid']['linestyle']['minor']
+    yaxis_linestyle = ax.yaxis._axinfo['grid']['linestyle']['minor']
+    zaxis_linestyle = ax.zaxis._axinfo['grid']['linestyle']['minor']
+
+    assert xaxis_linestyle == '--'
+    assert yaxis_linestyle == '--'
+    assert zaxis_linestyle == '--'
+
+def test_rc_3dgrid_major_minor():
+    mpl.rcParams['_internal.classic_mode'] = False
+    
+    mpl.rcParams['grid.major.linestyle'] = '--'
+    mpl.rcParams['grid.minor.linestyle'] = ':'
+    
+    mpl.rcParams['grid.major.linewidth'] = 1.5
+    mpl.rcParams['grid.minor.linewidth'] = 0.5
+    
+    mpl.rcParams['grid.major.color'] = 'blue'
+    mpl.rcParams['grid.minor.color'] = 'green'
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    xaxis_color = ax.xaxis._axinfo['grid']['color']['major']
+    yaxis_color = ax.yaxis._axinfo['grid']['color']['major']
+    zaxis_color = ax.zaxis._axinfo['grid']['color']['major']
+
+    assert xaxis_color == 'blue'
+    assert yaxis_color == 'blue'
+    assert zaxis_color == 'blue'
+
+    xaxis_linewidth = ax.xaxis._axinfo['grid']['linewidth']['major']
+    yaxis_linewidth = ax.yaxis._axinfo['grid']['linewidth']['major']
+    zaxis_linewidth = ax.zaxis._axinfo['grid']['linewidth']['major']
+
+    assert xaxis_linewidth == 1.5
+    assert yaxis_linewidth == 1.5
+    assert zaxis_linewidth == 1.5
+
+    xaxis_linestyle = ax.xaxis._axinfo['grid']['linestyle']['major']
+    yaxis_linestyle = ax.yaxis._axinfo['grid']['linestyle']['major']
+    zaxis_linestyle = ax.zaxis._axinfo['grid']['linestyle']['major']
+
+    assert xaxis_linestyle == '--'
+    assert yaxis_linestyle == '--'
+    assert zaxis_linestyle == '--'
+
+    xaxis_color = ax.xaxis._axinfo['grid']['color']['minor']
+    yaxis_color = ax.yaxis._axinfo['grid']['color']['minor']
+    zaxis_color = ax.zaxis._axinfo['grid']['color']['minor']
+
+    assert xaxis_color == 'green'
+    assert yaxis_color == 'green'
+    assert zaxis_color == 'green'
+
+    xaxis_linewidth = ax.xaxis._axinfo['grid']['linewidth']['minor']
+    yaxis_linewidth = ax.yaxis._axinfo['grid']['linewidth']['minor']
+    zaxis_linewidth = ax.zaxis._axinfo['grid']['linewidth']['minor']
+
+    assert xaxis_linewidth == 0.5
+    assert yaxis_linewidth == 0.5
+    assert zaxis_linewidth == 0.5
+
+    xaxis_linestyle = ax.xaxis._axinfo['grid']['linestyle']['minor']
+    yaxis_linestyle = ax.yaxis._axinfo['grid']['linestyle']['minor']
+    zaxis_linestyle = ax.zaxis._axinfo['grid']['linestyle']['minor']
+
+    assert xaxis_linestyle == ':'
+    assert yaxis_linestyle == ':'
+    assert zaxis_linestyle == ':'
+    
+def test_rc_3dgrid_major_minor_override():
+    mpl.rcParams['_internal.classic_mode'] = False
+
+    mpl.rcParams['grid.major.linestyle'] = '--'
+    mpl.rcParams['grid.minor.linestyle'] = ':'
+    
+    mpl.rcParams['grid.major.linewidth'] = 1.5
+    mpl.rcParams['grid.minor.linewidth'] = 0.5
+    
+    mpl.rcParams['grid.major.color'] = 'blue'
+    mpl.rcParams['grid.minor.color'] = 'green'
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    ax.xaxis._axinfo['grid']['color']['major'] = 'yellow'
+    ax.yaxis._axinfo['grid']['color']['major'] = 'yellow'
+    ax.zaxis._axinfo['grid']['color']['major'] = 'yellow'
+    ax.xaxis._axinfo['grid']['color']['minor'] = 'red'
+    ax.yaxis._axinfo['grid']['color']['minor'] = 'red'
+    ax.zaxis._axinfo['grid']['color']['minor'] = 'red'
+
+    ax.xaxis._axinfo['grid']['linewidth']['major'] = 2.5
+    ax.yaxis._axinfo['grid']['linewidth']['major'] = 2.5
+    ax.zaxis._axinfo['grid']['linewidth']['major'] = 2.5
+    ax.xaxis._axinfo['grid']['linewidth']['minor'] = 2
+    ax.yaxis._axinfo['grid']['linewidth']['minor'] = 2
+    ax.zaxis._axinfo['grid']['linewidth']['minor'] = 2
+
+    ax.xaxis._axinfo['grid']['linestyle']['major'] = '-'
+    ax.yaxis._axinfo['grid']['linestyle']['major'] = '-'
+    ax.zaxis._axinfo['grid']['linestyle']['major'] = '-'
+    ax.xaxis._axinfo['grid']['linestyle']['minor'] = '-.'
+    ax.yaxis._axinfo['grid']['linestyle']['minor'] = '-.'
+    ax.zaxis._axinfo['grid']['linestyle']['minor'] = '-.'
+
+    xaxis_color = ax.xaxis._axinfo['grid']['color']['major']
+    yaxis_color = ax.yaxis._axinfo['grid']['color']['major']
+    zaxis_color = ax.zaxis._axinfo['grid']['color']['major']
+
+    assert xaxis_color == 'yellow'
+    assert yaxis_color == 'yellow'
+    assert zaxis_color == 'yellow'
+
+    xaxis_linewidth = ax.xaxis._axinfo['grid']['linewidth']['major']
+    yaxis_linewidth = ax.yaxis._axinfo['grid']['linewidth']['major']
+    zaxis_linewidth = ax.zaxis._axinfo['grid']['linewidth']['major']
+
+    assert xaxis_linewidth == 2.5
+    assert yaxis_linewidth == 2.5
+    assert zaxis_linewidth == 2.5
+
+    xaxis_linestyle = ax.xaxis._axinfo['grid']['linestyle']['major']
+    yaxis_linestyle = ax.yaxis._axinfo['grid']['linestyle']['major']
+    zaxis_linestyle = ax.zaxis._axinfo['grid']['linestyle']['major']
+
+    assert xaxis_linestyle == '-'
+    assert yaxis_linestyle == '-'
+    assert zaxis_linestyle == '-'
+
+    xaxis_color = ax.xaxis._axinfo['grid']['color']['minor']
+    yaxis_color = ax.yaxis._axinfo['grid']['color']['minor']
+    zaxis_color = ax.zaxis._axinfo['grid']['color']['minor']
+
+    assert xaxis_color == 'red'
+    assert yaxis_color == 'red'
+    assert zaxis_color == 'red'
+
+    xaxis_linewidth = ax.xaxis._axinfo['grid']['linewidth']['minor']
+    yaxis_linewidth = ax.yaxis._axinfo['grid']['linewidth']['minor']
+    zaxis_linewidth = ax.zaxis._axinfo['grid']['linewidth']['minor']
+
+    assert xaxis_linewidth == 2
+    assert yaxis_linewidth == 2
+    assert zaxis_linewidth == 2
+
+    xaxis_linestyle = ax.xaxis._axinfo['grid']['linestyle']['minor']
+    yaxis_linestyle = ax.yaxis._axinfo['grid']['linestyle']['minor']
+    zaxis_linestyle = ax.zaxis._axinfo['grid']['linestyle']['minor']
+
+    assert xaxis_linestyle == '-.'
+    assert yaxis_linestyle == '-.'
+    assert zaxis_linestyle == '-.'
+
+def test_rc_3dgrid_major_minor_invalid():
+    mpl.rcParams['_internal.classic_mode'] = False
+
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.color'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.color'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.linewidth'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.linewidth'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.major.linestyle'] = 'bblue'
+    with pytest.raises(ValueError):
+        mpl.rcParams['grid.minor.linestyle'] = 'bblue'
